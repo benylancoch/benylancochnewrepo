@@ -117,6 +117,7 @@ public class PlaneServiceImplTests {
 		
 		//Act
 		Plane plane = planeService.addPlane(validPlaneNo, validManufacturer, validModel, validClasses, validSeats);
+		Plane planeCheck = planeService.getPlane(plane.getPlaneId());
 		
 		//Assert
 		Assert.assertNotNull(plane);
@@ -125,6 +126,8 @@ public class PlaneServiceImplTests {
 		Assert.assertEquals(validModel, plane.getModel());
 		Assert.assertEquals(validClasses, plane.getClasses());
 		Assert.assertEquals(validSeats, plane.getSeats());
+		
+		Assert.assertNotNull(planeCheck);
 	}
 	
 	@Test

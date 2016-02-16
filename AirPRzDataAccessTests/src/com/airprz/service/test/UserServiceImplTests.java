@@ -121,6 +121,7 @@ public class UserServiceImplTests {
 		
 		//Act
 		User user = userService.addUser(validEmail, validPassword, validLevel, validFirstName, validLastName, validHonorific, validPhone, validName3rd, validPhone3rd);
+		User userCheck = userService.getUser(user.getId());
 		
 		//Assert
 		Assert.assertNotNull(user);
@@ -134,6 +135,8 @@ public class UserServiceImplTests {
 		Assert.assertEquals(validPhone, user.getPhone());
 		Assert.assertEquals(validName3rd, user.getName_3rd());
 		Assert.assertEquals(validPhone3rd, user.getPhone_3rd());
+		
+		Assert.assertNotNull(userCheck);
 	}
 	
 	@Test

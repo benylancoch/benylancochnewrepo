@@ -118,18 +118,29 @@ public class DataSourceSetupUtil {
 
 		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
 						+"'ABC', 'ABC DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-01-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
+				+"'DFGH', 'DFGH DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
+				+"'123', '123 DESCRIPTION', 0.25, 'N', 'U', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM, VALID_TO) VALUES ("
+				+"'456', '456 DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-01-03-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
 		//----------------PROMO_CODES-------------------------------------------
 
-		//----------------TAX-------------------------------------------
-		stmt.executeUpdate("CREATE TABLE BAZA.TAX ("
+		//----------------TAXES-------------------------------------------
+		stmt.executeUpdate("CREATE TABLE BAZA.TAXES ("
 				+"TAX_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY , "
 				+"VALUE DECIMAL(5 , 2) NOT NULL, "
 				+"DESCRIPTION VARCHAR(255) NOT NULL, "
 				+"VALID_FROM TIMESTAMP NOT NULL, "
 				+"VALID_TO TIMESTAMP)");
 
-		stmt.executeUpdate("INSERT INTO BAZA.TAX (VALUE, DESCRIPTION, VALID_FROM) VALUES ("
-						+"0.23, 'POLISH VAT 23%', parseDateTime('2016-01-01-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM) VALUES ("
+						+"TRUNCATE_VALUE(0.23, 2, TRUE), 'POLISH VAT 23%', parseDateTime('2016-01-01-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM) VALUES ("
+				+"TRUNCATE_VALUE(0.09, 2, TRUE), 'POLISH VAT 9%', parseDateTime('2016-02-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM, VALID_TO) VALUES ("
+				+"TRUNCATE_VALUE(0.09, 2, TRUE), 'POLISH VAT 9%', parseDateTime('2016-02-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
+				+"parseDateTime('2016-02-03-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
 		//----------------TAX-------------------------------------------
 		
 		//----------------TICKETS-------------------------------------------
@@ -214,7 +225,7 @@ public class DataSourceSetupUtil {
 				+"(USER_ID) REFERENCES BAZA.USERS (USER_ID) ON DELETE CASCADE");
 		
 		stmt.executeUpdate("ALTER TABLE BAZA.TRANSACTIONS ADD CONSTRAINT TRANSACTIONS_TAX_FK FOREIGN KEY"
-				+"(TAX_ID) REFERENCES BAZA.TAX (TAX_ID) ON DELETE CASCADE");
+				+"(TAX_ID) REFERENCES BAZA.TAXES (TAX_ID) ON DELETE CASCADE");
 		
 		stmt.executeUpdate("ALTER TABLE BAZA.USR_PCODES ADD CONSTRAINT USR_PCODES_PROMO_CODES_FK FOREIGN KEY"
 				+"(CODE_ID) REFERENCES BAZA.PROMO_CODES (CODE_ID) ON DELETE CASCADE");
@@ -241,7 +252,7 @@ public class DataSourceSetupUtil {
 
 		stmt.executeUpdate("DROP TABLE BAZA.PROMO_CODES");
 
-		stmt.executeUpdate("DROP TABLE BAZA.TAX");
+		stmt.executeUpdate("DROP TABLE BAZA.TAXES");
 
 		stmt.executeUpdate("DROP TABLE BAZA.TICKETS");
 

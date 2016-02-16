@@ -35,7 +35,6 @@ public class AirportServiceImplTests {
 		final String validCity = "KRAKOW";
 		final String validCountry = "POLAND";
 		final String validAddress = "SOME STREET 2";
-		final String validLocation = "";
 		final AirportService airportService = new AirportServiceImpl();
 		
 		//Act
@@ -126,6 +125,7 @@ public class AirportServiceImplTests {
 		
 		//Act
 		Airport airport = airportService.addAirport(validName, validCity, validCountry, validAddress, validLocation);
+		Airport airportCheck = airportService.getAirport(airport.getAirportId());
 		
 		//Assert
 		Assert.assertNotNull(airport);
@@ -135,6 +135,8 @@ public class AirportServiceImplTests {
 		Assert.assertEquals(validCountry, airport.getCountry());
 		Assert.assertEquals(validAddress, airport.getAddress());
 		Assert.assertEquals(validLocation, airport.getLocation());
+		
+		Assert.assertNotNull(airportCheck);
 	}
 	
 	@Test

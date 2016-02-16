@@ -71,7 +71,6 @@ public class PlaneDaoImpl implements PlaneDao {
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				Plane plane = new Plane();
-				plane = new Plane();
 				plane.setPlaneId(rs.getString("PLANE_NO"));
 				plane.setManufacturer(rs.getString("MANUFACTURER"));
 				plane.setModel(rs.getString("MODEL"));
@@ -148,6 +147,7 @@ private Plane insertPlane(Plane plane) {
 			stmt.setString(3, plane.getModel());
 			stmt.setLong(4, plane.getClasses());
 			stmt.setLong(5, plane.getSeats());
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
