@@ -1,6 +1,6 @@
 package com.airprz.model;
 
-public class UserPromoCodes {
+public class UserPromoCode {
 	
 	private Long upcId;
 	private User user;

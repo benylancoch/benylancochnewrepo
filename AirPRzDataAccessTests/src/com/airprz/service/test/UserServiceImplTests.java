@@ -107,7 +107,7 @@ public class UserServiceImplTests {
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
 		
-		final Long validUserId = new Long(2);
+		final Long validUserId = new Long(3);
 		final String validEmail = "some@mail.com";
 		final String validPassword = "1234";
 		final Long validLevel = new Long(0);
@@ -145,7 +145,7 @@ public class UserServiceImplTests {
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
 		
-		final Long validUserId = new Long(2);
+		final Long validUserId = new Long(3);
 		final String validEmail = "some@mail.com";
 		final String validPassword = "1234";
 		final Long validLevel = new Long(0);
@@ -178,7 +178,7 @@ public class UserServiceImplTests {
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
 		
-		final Long validUserId = new Long(2);
+		//final Long validUserId = new Long(2);
 		final String validEmail = "test@mail.com";
 		final String validPassword = "1234";
 		final Long validLevel = new Long(0);

@@ -1,8 +1,6 @@
 package com.airprz;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -13,7 +11,6 @@ import javax.naming.NamingException;
 import org.h2.jdbcx.JdbcDataSource;
 
 import com.airprz.data.util.DbConnector;
-import com.airprz.model.User;
 
 public class DataSourceSetupUtil {
 	private static boolean hasSetupInitialContext;
@@ -60,10 +57,6 @@ public class DataSourceSetupUtil {
 				+"ADDRESS VARCHAR(255) NOT NULL, "
 				+"LOCATION VARCHAR(19))");
 
-		stmt.executeUpdate("INSERT INTO BAZA.AIRPORTS (NAME, CITY, COUNTRY, ADDRESS) VALUES ("
-				+"'KRAKOW INTERNATIONAL AIRPORT', 'KRAKOW', 'POLAND', 'SOME STREET 2')");
-		stmt.executeUpdate("INSERT INTO BAZA.AIRPORTS (NAME, CITY, COUNTRY, ADDRESS) VALUES ("
-				+"'RZESZOW INTERNATIONAL AIRPORT', 'RZESZOW', 'POLAND', 'SOME STREET 2')");
 		//----------------AIRPORTS-------------------------------------------
 		
 		//----------------FLIGHTS-------------------------------------------
@@ -99,10 +92,6 @@ public class DataSourceSetupUtil {
 				+"CLASSES INTEGER NOT NULL, "
 				+"SEATS INTEGER NOT NULL)");
 
-		stmt.executeUpdate("INSERT INTO BAZA.PLANES (PLANE_NO, MANUFACTURER, MODEL, CLASSES, SEATS) VALUES ("
-						+"'AIR001', 'AIRBUS', 'A380', 3, 100)");
-		stmt.executeUpdate("INSERT INTO BAZA.PLANES (PLANE_NO, MANUFACTURER, MODEL, CLASSES, SEATS) VALUES ("
-				+"'AIR002', 'AIRBUS', 'A380', 3, 200)");
 		//----------------PLANES-------------------------------------------
 		
 		//----------------PROMO_CODES-------------------------------------------
@@ -116,14 +105,6 @@ public class DataSourceSetupUtil {
 				+"VALID_FROM TIMESTAMP NOT NULL, "
 				+"VALID_TO TIMESTAMP)");
 
-		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
-						+"'ABC', 'ABC DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-01-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
-		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
-				+"'DFGH', 'DFGH DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
-		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
-				+"'123', '123 DESCRIPTION', 0.25, 'N', 'U', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
-		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM, VALID_TO) VALUES ("
-				+"'456', '456 DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-01-03-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
 		//----------------PROMO_CODES-------------------------------------------
 
 		//----------------TAXES-------------------------------------------
@@ -134,13 +115,6 @@ public class DataSourceSetupUtil {
 				+"VALID_FROM TIMESTAMP NOT NULL, "
 				+"VALID_TO TIMESTAMP)");
 
-		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM) VALUES ("
-						+"TRUNCATE_VALUE(0.23, 2, TRUE), 'POLISH VAT 23%', parseDateTime('2016-01-01-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
-		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM) VALUES ("
-				+"TRUNCATE_VALUE(0.09, 2, TRUE), 'POLISH VAT 9%', parseDateTime('2016-02-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
-		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM, VALID_TO) VALUES ("
-				+"TRUNCATE_VALUE(0.09, 2, TRUE), 'POLISH VAT 9%', parseDateTime('2016-02-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
-				+"parseDateTime('2016-02-03-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
 		//----------------TAX-------------------------------------------
 		
 		//----------------TICKETS-------------------------------------------
@@ -179,8 +153,6 @@ public class DataSourceSetupUtil {
 				+"NAME_3RD VARCHAR(255), "
 				+"PHONE_3RD VARCHAR(20))");
 
-		stmt.executeUpdate("INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
-						+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
 		//----------------USERS-------------------------------------------
 		
 		//----------------USER_PROMOTIONAL_CODES-------------------------------------------
@@ -233,6 +205,61 @@ public class DataSourceSetupUtil {
 		stmt.executeUpdate("ALTER TABLE BAZA.USR_PCODES ADD CONSTRAINT USR_PCODES_USERS_FK FOREIGN KEY"
 				+"(USER_ID) REFERENCES BAZA.USERS (USER_ID) ON DELETE CASCADE");
 		//---------------------------------CONSTRAINTS-------------------------------------
+		
+		//---------------------------------DATA-ADDITION-----------------------------------
+		
+		//Airports
+		stmt.executeUpdate("INSERT INTO BAZA.AIRPORTS (NAME, CITY, COUNTRY, ADDRESS) VALUES ("
+				+"'KRAKOW INTERNATIONAL AIRPORT', 'KRAKOW', 'POLAND', 'SOME STREET 2')");
+		stmt.executeUpdate("INSERT INTO BAZA.AIRPORTS (NAME, CITY, COUNTRY, ADDRESS) VALUES ("
+				+"'RZESZOW INTERNATIONAL AIRPORT', 'RZESZOW', 'POLAND', 'SOME STREET 2')");
+		//Airports
+		
+		//Planes
+		stmt.executeUpdate("INSERT INTO BAZA.PLANES (PLANE_NO, MANUFACTURER, MODEL, CLASSES, SEATS) VALUES ("
+				+"'AIR001', 'AIRBUS', 'A380', 3, 100)");
+		stmt.executeUpdate("INSERT INTO BAZA.PLANES (PLANE_NO, MANUFACTURER, MODEL, CLASSES, SEATS) VALUES ("
+				+"'AIR002', 'AIRBUS', 'A380', 3, 200)");
+		//Planes
+		
+		//PromoCodes
+		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
+				+"'ABC', 'ABC DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-01-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
+				+"'DFGH', 'DFGH DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM) VALUES ("
+				+"'123', '123 DESCRIPTION', 0.25, 'N', 'U', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.PROMO_CODES (CODE, DESCRIPTION, DISCOUNT, MULTIPLE, USED, VALID_FROM, VALID_TO) VALUES ("
+				+"'456', '456 DESCRIPTION', 0.25, 'N', 'N', parseDateTime('2016-01-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-01-03-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		//PromoCodes
+		
+		//Taxes
+		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM) VALUES ("
+				+"TRUNCATE_VALUE(0.23, 2, TRUE), 'POLISH VAT 23%', parseDateTime('2016-01-01-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM) VALUES ("
+				+"TRUNCATE_VALUE(0.09, 2, TRUE), 'POLISH VAT 9%', parseDateTime('2016-02-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		stmt.executeUpdate("INSERT INTO BAZA.TAXES (VALUE, DESCRIPTION, VALID_FROM, VALID_TO) VALUES ("
+				+"TRUNCATE_VALUE(0.09, 2, TRUE), 'POLISH VAT 9%', parseDateTime('2016-02-02-00.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
+				+"parseDateTime('2016-02-03-00.00.00', 'yyyy-MM-dd-hh.mm.ss'))");
+		//Taxes
+		
+		//Users
+		stmt.executeUpdate("INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
+				+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
+		stmt.executeUpdate("INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
+				+"'test2@mail.com', '1233', 0, 'Sebastian2', 'Wcislo2', '0', '1234567890', 'John Doe2', '0987654321')");
+		//Users
+		
+		//UserPromoCode
+		stmt.executeUpdate("INSERT INTO BAZA.USR_PCODES (USER_ID, CODE_ID) VALUES ("
+				+"1, 1)");
+		stmt.executeUpdate("INSERT INTO BAZA.USR_PCODES (USER_ID, CODE_ID) VALUES ("
+				+"1, 2)");
+		stmt.executeUpdate("INSERT INTO BAZA.USR_PCODES (USER_ID, CODE_ID) VALUES ("
+				+"2, 1)");
+		stmt.executeUpdate("INSERT INTO BAZA.USR_PCODES (USER_ID, CODE_ID) VALUES ("
+				+"2, 3)");
+		//---------------------------------DATA-ADDITION-----------------------------------
 		
 		stmt.close();
 		connection.close();
