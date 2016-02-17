@@ -1,0 +1,65 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+		<div class="container col-md-12">
+			<h1>Promotion codes management</h1>
+                <h:form>
+                	<div class="btn-group">
+                		<h:commandButton value="New promotion code" action="#{promoCodeController.redirectNew}" styleClass="btn btn-primary" />
+                	</div>
+                	</h:form>
+				<div class="form-group col-md-12">				
+					<div class="table-responsive">
+						<h:form id="promoCodesForm">
+							<h:dataTable value="#{promoCodeBean.listPromoCodes}"
+								 var="item" styleClass="table table-striped">
+								 <h:column>
+								 	<f:facet name="header">Code</f:facet>
+								 	#{item.code}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Description</f:facet>
+								 	#{item.description}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Discount</f:facet>
+								 	#{item.discount}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Multiple use</f:facet>
+								 	#{item.multiple}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Used?</f:facet>
+								 	#{item.used}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Valid from</f:facet>
+								 	#{item.validFrom}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Valid to</f:facet>
+								 	#{item.validTo}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header"></f:facet>
+								 	<div class="btn-group">
+				                		<h:commandButton value="Edit" action="#{promoCodeController.redirectEdit(item)}" styleClass="btn btn-primary" />
+				                	</div>
+				                	#{" "}
+								 	<div class="btn-group">
+				                		<h:commandButton value="Delete" action="#{promoCodeController.deletePlane(item)}" styleClass="btn btn-danger" rendered="#{userBean.level == 2}"/>
+				                	</div>
+								 </h:column>
+							</h:dataTable>
+						</h:form>
+					</div>
+					
+				</div>
+			
+		</div>
+    </ui:define>
+</ui:composition>

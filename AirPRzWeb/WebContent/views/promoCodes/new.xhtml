@@ -1,0 +1,88 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+    
+    	<div class="container col-md-6">
+    		<h1>
+    			<h:outputText value="Add new promotion code" rendered="#{promoCodeBean.codeId == null}" />
+    			<h:outputText value="Edit #{promoCodeBean.codeId}" rendered="#{promoCodeBean.codeId != null}" />
+    		</h1>
+
+    		
+                <h:form>
+				<div class="form-group">
+					<h:outputText value="Code *: " styleClass="control-label" />
+		
+					<h:inputText id="Code" value="#{promoCodeBean.code}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Code field must not be empty" 
+						validatorMessage="Code must be less than 11 characters">
+							<f:validateLength maximum="10"/>
+					</h:inputText>
+					<h:message for="Code" style="color:red" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Description *: " styleClass="control-label" />
+		
+					<h:inputText id="Description" value="#{promoCodeBean.description}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Description field must not be empty" 
+						validatorMessage="Description must be less than 256 characters">
+							<f:validateLength maximum="255"/>
+					</h:inputText>
+					<h:message for="Description" style="color:red" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Discount value *: " styleClass="control-label" />
+		
+					<h:inputText id="Discount" label="Validation error" value="#{promoCodeBean.description}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Discount field must not be empty" 
+						validatorMessage="Number provided must be between 0 and 1">
+							<f:convertNumber type="decimal" />
+							<f:validateDoubleRange minimum="0.0" maximum="1.0" for="Discount"/>
+					</h:inputText>
+					<h:message for="Description" style="color:red" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Multiple use *: " styleClass="control-label" />
+		
+					<h:selectOneMenu id="multipleUse" value="#{promoCodeBean.multiple}" styleClass="form-control">
+					   	<f:selectItem itemValue="N" itemLabel="One use" />
+					   	<f:selectItem itemValue="Y" itemLabel="Multiple use" />
+					</h:selectOneMenu>
+				</div>
+				<div class="form-group">
+					<h:outputText value="Used *: " styleClass="control-label" 
+						rendered="#{promoCodeBean.codeId != null}"/>
+		
+					<h:selectOneMenu id="used" value="#{promoCodeBean.used}" styleClass="form-control"
+						rendered="#{promoCodeBean.codeId != null}">
+					   	<f:selectItem itemValue="N" itemLabel="No" />
+					   	<f:selectItem itemValue="Y" itemLabel="Yes" />
+					</h:selectOneMenu>
+				</div>				
+				<div class="form-group">
+					<h:outputText value="Valid from date *: " styleClass="control-label" />
+		
+					<h:inputText id="validFrom" label="Validation error" value="#{promoCodeBean.validFrom}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Valid from date field must not be empty" >
+					</h:inputText>
+					<h:message for="validFrom" style="color:red" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Valid to date: " styleClass="control-label" />
+		
+					<h:inputText id="validTo" label="Validation error" value="#{promoCodeBean.validTo}" styleClass="form-control" autocomplete="false" >
+					</h:inputText>
+					<h:message for="validTo" style="color:red" />
+				</div>
+				<h:commandButton value="Add new promo code" action="#{promoCodeController.savePromoCode}" styleClass="btn btn-primary" 
+				rendered="#{promoCodeBean.codeId == null}"/>
+				<h:commandButton value="Update" action="#{promoCodeController.savePromoCode}" styleClass="btn btn-primary" 
+				rendered="#{promoCodeBean.codeId != null}"/>
+				#{' '}<h:link value="Cancel" outcome="index?faces-redirect=true" styleClass="btn btn-danger" />
+			</h:form>
+		</div>
+</ui:define>
+</ui:composition>

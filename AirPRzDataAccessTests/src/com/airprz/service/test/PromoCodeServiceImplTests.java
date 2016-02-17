@@ -253,7 +253,7 @@ public class PromoCodeServiceImplTests {
 		final PromoCodeService promoCodeService = new PromoCodeServiceImpl();
 		
 		//Act
-		PromoCode promoCode = promoCodeService.addPromoCode(validCode, validDescription, validDiscount, validMultiple, validUsed, validValidFrom, null);
+		PromoCode promoCode = promoCodeService.addPromoCode(validCode, validDescription, validDiscount, validMultiple, validValidFrom, null);
 		PromoCode promoCodeCheck = promoCodeService.getPromoCode(promoCode.getCodeId());
 		
 		//Assert
@@ -283,7 +283,7 @@ public class PromoCodeServiceImplTests {
 		final PromoCodeService promoCodeService = new PromoCodeServiceImpl();
 		
 		//Act
-		PromoCode promoCode = promoCodeService.addPromoCode(validCode, validDescription, validDiscount, validMultiple, validUsed, validValidFrom, validValidTo);
+		PromoCode promoCode = promoCodeService.addPromoCode(validCode, validDescription, validDiscount, validMultiple, validValidFrom, validValidTo);
 		PromoCode promoCodeCheck = promoCodeService.getPromoCode(promoCode.getCodeId());
 		
 		//Assert
@@ -305,7 +305,7 @@ public class PromoCodeServiceImplTests {
 		final PromoCodeService promoCodeService = new PromoCodeServiceImpl();
 		
 		//Act
-		PromoCode promoCode = promoCodeService.addPromoCode(null, null, null, null, null, null, null);
+		PromoCode promoCode = promoCodeService.addPromoCode(null, null, null, null, null, null);
 		
 		//Assert
 		Assert.assertNull(promoCode);

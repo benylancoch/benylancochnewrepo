@@ -35,18 +35,18 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 	
 	@Override
 	public PromoCode addPromoCode(String code, String description,
-			BigDecimal discount, String multiple, String used,
+			BigDecimal discount, String multiple,
 			Timestamp validFrom, Timestamp validTo) {
 		PromoCode promoCode = null;
 		
-		if (code != null && description != null && discount != null && multiple != null && used != null && validFrom != null
-				&& !"".equals(code) && !"".equals(multiple) && !"".equals(used)) {
+		if (code != null && description != null && discount != null && multiple != null && validFrom != null
+				&& !"".equals(code) && !"".equals(multiple))  {
 			promoCode = new PromoCode();
 			promoCode.setCode(code);
 			promoCode.setDescription(description);
 			promoCode.setDiscount(discount);
 			promoCode.setMultiple(multiple);
-			promoCode.setUsed(used);
+			promoCode.setUsed("N");
 			promoCode.setValidFrom(validFrom);
 			promoCode.setValidTo(validTo);
 			promoCode = promoCodeDao.savePromoCode(promoCode);

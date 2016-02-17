@@ -13,7 +13,7 @@ public interface PromoCodeService {
 	
 	List<PromoCode> getPromoCodes(boolean valid);
 	
-	PromoCode addPromoCode(String code, String description, BigDecimal discount, String multiple, String used, Timestamp validFrom, Timestamp validTo);
+	PromoCode addPromoCode(String code, String description, BigDecimal discount, String multiple, Timestamp validFrom, Timestamp validTo);
 	
 	PromoCode updatePromoCode(Long codeId, String code, String description, BigDecimal discount, String multiple, String used, Timestamp validFrom, Timestamp validTo);
 	

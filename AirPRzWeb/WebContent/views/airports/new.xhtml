@@ -6,20 +6,35 @@
     <ui:define name="content">  
     
     	<div class="container col-md-6">
-    		<h1>Add new Airport</h1>
+    		<h1>
+    			<h:outputText value="Add new Airport" rendered="#{airportBean.airportId == null}" />
+    			<h:outputText value="Edit #{airportBean.name}" rendered="#{airportBean.airportId != null}" />
+    		</h1>
+
+    		
                 <h:form>
 				<div class="form-group">
-					<h:outputText value="Airport name: " styleClass="control-label" />
+					<h:outputText value="Airport name *: " styleClass="control-label" />
 		
-					<h:inputText value="#{airportBean.name}" styleClass="form-control" autocomplete="off" />
+					<h:inputText id="AirportName" value="#{airportBean.name}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Airport name field must not be empty" 
+						validatorMessage="Airport name must be less than 256 characters">
+							<f:validateLength maximum="255"/>
+					</h:inputText>
+					<h:message for="AirportName" style="color:red" />
 				</div>
 				<div class="form-group">
-					<h:outputText value="City: " styleClass="control-label" />
+					<h:outputText value="City *: " styleClass="control-label" />
 		
-					<h:inputText value="#{airportBean.city}" styleClass="form-control" autocomplete="off" />
+					<h:inputText id="AirportCity" value="#{airportBean.city}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="City field must not be empty" 
+						validatorMessage="City name must be less than 256 characters">
+							<f:validateLength maximum="255"/>
+					</h:inputText>
+					<h:message for="AirportCity" style="color:red" />
 				</div>
 				<div class="form-group">
-					<h:outputText value="Country: " styleClass="control-label" />
+					<h:outputText value="Country *: " styleClass="control-label" />
 		
 					<h:selectOneMenu id="country" value="#{airportBean.country}" styleClass="form-control">
 					   	<f:selectItem itemValue="PL" itemLabel="Poland" />
@@ -29,17 +44,29 @@
 					</h:selectOneMenu>
 				</div>
 				<div class="form-group">
-					<h:outputText value="Address: " styleClass="control-label" />
+					<h:outputText value="Address *: " styleClass="control-label" />
 		
-					<h:inputText value="#{airportBean.address}" styleClass="form-control" autocomplete="off" />
+					<h:inputText id="AirportAddress" value="#{airportBean.address}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Address field must not be empty" 
+						validatorMessage="Address must be less than 256 characters">
+							<f:validateLength maximum="255"/>
+					</h:inputText>
+					<h:message for="AirportAddress" style="color:red" />
 				</div>
 				<div class="form-group">
 					<h:outputText value="Location: " styleClass="control-label" />
 		
-					<h:inputText value="#{airportBean.location}" styleClass="form-control" autocomplete="off" />
+					<h:inputText id="AirportLocation" value="#{airportBean.location}" styleClass="form-control" autocomplete="false" 
+						validatorMessage="Location must be less than 20 characters">
+							<f:validateLength maximum="19"/>
+					</h:inputText>
+					<h:message for="AirportLocation" style="color:red" />
 				</div>
-				<h:commandButton value="Add new airport" action="#{airportController.saveAirport}" styleClass="btn btn-primary" />
-				#{' '}<h:commandButton value="Cancel" action="index?faces-redirect=true" styleClass="btn btn-danger" />
+				<h:commandButton value="Add new airport" action="#{airportController.saveAirport}" styleClass="btn btn-primary" 
+				rendered="#{airportBean.airportId == null}"/>
+				<h:commandButton value="Update" action="#{airportController.saveAirport}" styleClass="btn btn-primary" 
+				rendered="#{airportBean.airportId != null}"/>
+				#{' '}<h:link value="Cancel" outcome="index?faces-redirect=true" styleClass="btn btn-danger" />
 			</h:form>
 		</div>
 </ui:define>

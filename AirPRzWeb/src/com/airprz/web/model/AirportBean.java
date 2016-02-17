@@ -65,7 +65,7 @@ public class AirportBean {
 		this.location = location;
 	}
 	
-	public List<Airport> getlistAirports() {
+	public List<Airport> getListAirports() {
 		
 		return airportService.getAirports();
 	}
