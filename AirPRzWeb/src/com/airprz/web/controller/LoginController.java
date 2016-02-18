@@ -46,7 +46,7 @@ public class LoginController {
 			
 			userBean.setPassword("");
 			
-			outcome = "users?faces-redirect=true";
+			outcome = "index?faces-redirect=true";
 		}
 		
 		return outcome;

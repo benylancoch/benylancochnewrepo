@@ -4,26 +4,22 @@
                 xmlns:f="http://java.sun.com/jsf/core"  
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">  
-	<div>
-		<h:form>
-			<div>
-				<h:outputText value="Email address" />:
-			</div>
-			<div>
-			<h:inputText value="#{userBean.email}" />
-			</div>
-			<div>
-				<h:outputText value="Password" />:
-			</div>
-			<div>
-			<h:inputSecret value="#{userBean.password}" />
-			</div>
-			<div>
-				<h:commandButton styleClass="button" value="Login"
-					action="#{loginController.login}" />
-				<h:outputLink value="register.xhtml">Register new user</h:outputLink>
-			</div>
-		</h:form>
-	</div>
+		<div class="container col-md-6">
+		<h1>Login</h1>
+                <h:form>
+				<div class="form-group">
+					<h:outputText value="Email address: " styleClass="control-label" />
+		
+					<h:inputText value="#{userBean.email}" styleClass="form-control" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Password: " styleClass="control-label" />
+		
+					<h:inputSecret value="#{userBean.password}" styleClass="form-control" />
+				</div>
+				<h:commandButton value="Login" action="#{loginController.login}" styleClass="btn btn-default" />
+				#{' '}<h:outputLink value="register.xhtml">Register new user</h:outputLink>
+			</h:form>
+		</div>
     </ui:define>
 </ui:composition>

@@ -1,0 +1,24 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+		<div class="container col-md-6">
+			<h1>Flights management</h1>
+                <h:form>
+                	<div class="btn-group">
+                		<h:commandButton value="Add new flight" action="newflight" styleClass="btn btn-primary" />
+                		<h:commandButton value="Planes" action="#" styleClass="btn btn-info" />
+                		<h:commandButton value="Airports" action="#" styleClass="btn btn-info" />
+                		<h:commandButton value="Promo codes" action="#" styleClass="btn btn-info" />
+                		<h:commandButton value="Taxes" action="#" styleClass="btn btn-info" />
+                	</div>
+				<div class="form-group">
+					<h1>Flights table</h1>
+					
+				</div>
+			</h:form>
+		</div>
+    </ui:define>
+</ui:composition>

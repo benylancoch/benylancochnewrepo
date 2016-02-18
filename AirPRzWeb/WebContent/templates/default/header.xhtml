@@ -11,20 +11,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.xhtml">AirPRz</a>
+                <a class="navbar-brand" href="#{request.contextPath}/index.xhtml">AirPRz</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><h:link value="Register" outcome="register?faces-redirect=true" rendered="#{userBean.userId == null}"/>
-                    	<h:link value="Profile" outcome="index?faces-redirect=true" rendered="#{userBean.userId != null}"/></li>
-                    <li><h:link value="Login" outcome="login?faces-redirect=true" rendered="#{userBean.userId == null}"/>
-                    	<h:form><h:commandLink value="Logout" action="#{dashboardController.logout}" rendered="#{userBean.userId != null}"/></h:form></li>
+               	    <li><h:link value="Users" outcome="/views/users/index?faces-redirect=true" rendered="#{userBean.level == 2}"/></li>
+                	<li><h:link value="Transactions" outcome="/views/transactions/index?faces-redirect=true" rendered="#{userBean.level == 2}"/></li>
+                    <li><h:link value="Flights management" outcome="/views/flight/management?faces-redirect=true" rendered="#{userBean.level == 2}"/></li>
+                    
+                    <li><h:link value="Register" outcome="/register?faces-redirect=true" rendered="#{userBean.userId == null}"/>
+                    	<h:link value="Profile" outcome="/views/user/profile?faces-redirect=true" rendered="#{userBean.userId != null}"/></li>
+                    <li><h:link value="Login" outcome="/login?faces-redirect=true" rendered="#{userBean.userId == null}"/>
+                    <h:form>
+                    		<h:commandLink value="Logout" action="#{dashboardController.logout}" rendered="#{userBean.userId != null}" />
+               		</h:form>
+                    </li>
                 </ul>
-                <form class="navbar-form navbar-right">
-                    <input type="text" class="form-control" placeholder="Search..." />
-                </form>
             </div>
         </div>
     </div>
