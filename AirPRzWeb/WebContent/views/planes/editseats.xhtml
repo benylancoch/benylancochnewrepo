@@ -1,0 +1,64 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:define name="content">  
+		<div class="container col-md-12">
+			<h1>Plane #{planeBean.planeId} - seats management</h1>
+                <h:form>
+
+				<div class="form-group">
+					
+					<div class="table-responsive">
+							<h:dataTable value="#{planeSeatsBean.planeSeats}"
+								 var="item" styleClass="table table-striped">
+								 <h:column>
+								 	#{item.get(0).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(1).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(2).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(3).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(4).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(5).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(6).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(7).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(8).seatNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	#{item.get(9).seatNo}
+								 </h:column>
+								 
+							</h:dataTable>
+					</div>
+					
+				</div>
+			</h:form>
+		</div>
+    </ui:define>
+</ui:composition>
