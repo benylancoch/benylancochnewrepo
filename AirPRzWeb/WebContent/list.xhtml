@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD.xhtmal1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>List Manager</title>
+	<h:outputStylesheet library="css" name="site.css" />
+	<h:outputStylesheet library="css" name="list.css" />
+</h:head>
+<h:body>
+	<div class="row">
+		<h1>
+			<h:outputText value="Hello, #{userBean.username}" />
+		</h1>
+		
+		<div class="row">
+			<h:form id="listForm">
+				<h:dataTable value="#{userBean.listItems}"
+					 var="item"	rowClasses="even,odd" styleClass="listing">
+					 <h:column>
+					 	<f:facet name="header">id</f:facet>
+					 	#{item.id}
+					 </h:column>
+					 <h:column>
+					 	<f:facet name="header">value</f:facet>
+					 	#{item.value}
+					 </h:column>
+					 <h:column>
+					 	<f:facet name="header"></f:facet>
+					 	<h:commandLink value="edit" action="#{listItemController.edit(item)}">
+					 		<f:ajax execute="@form" render="entryForm" />
+					 	</h:commandLink>
+					 	<h:outputText value=" | " />
+					 	<h:commandLink value="delete" action="#{listItemController.delete(item)}">
+					 		<f:ajax execute="@form" render="listForm" />
+					 	</h:commandLink>
+					 </h:column>
+				</h:dataTable>
+			</h:form>
+		</div>
+		
+		<h:form id="entryForm" styleClass="entryForm">
+			<div class="row header">
+				<h:outputText value="New Item:" rendered="#{listItemBean.id == null}" />
+				<h:outputText value="Editing Item: #{listItemBean.id}" rendered="#{listItemBean.id != null}" />
+			</div>
+			<div class="row">
+				<h:message for="newValue" styleClass="error" />
+			</div>
+			<div class="row">
+				<h:inputText id="newValue" value="#{listItemBean.value}" 
+				required="true" requiredMessage="Value is required." />
+			</div>
+			<div class="row">
+				<h:inputHidden value="#{listItemBean.id}" />
+				<h:commandButton value="#{listItemBean.saveButtonValue}" action="#{listItemController.save}" styleClass="button">
+					<f:ajax execute="@form" render="listForm entryForm" />
+				</h:commandButton>
+			</div>
+		</h:form>
+	</div>
+</h:body>
+</html>

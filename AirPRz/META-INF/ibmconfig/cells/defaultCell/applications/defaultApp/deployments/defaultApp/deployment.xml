@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appdeployment:Deployment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:appdeployment="http://www.ibm.com/websphere/appserver/schemas/5.0/appdeployment.xmi" xmi:id="Deployment_1452709375246">
+  <deployedObject xmi:type="appdeployment:ApplicationDeployment" xmi:id="ApplicationDeployment_1452709375246" deploymentId="0" startingWeight="1" binariesURL="$(APP_INSTALL_ROOT)/WIN-04CCRHOFG9NNode01Cell/AirPRz.ear" useMetadataFromBinaries="false" enableDistribution="true" createMBeansForResources="true" reloadEnabled="false" appContextIDForSecurity="href:WIN-04CCRHOFG9NNode01Cell/AirPRz" filePermission=".*\.dll=755#.*\.so=755#.*\.a=755#.*\.sl=755" allowDispatchRemoteInclude="false" allowServiceRemoteInclude="false" asyncRequestDispatchType="DISABLED" standaloneModule="false" enableClientModule="false">
+    <targetMappings xmi:id="DeploymentTargetMapping_1452709375246" enable="true" target="ServerTarget_1452709375246"/>
+    <classloader xmi:id="Classloader_1452709375246" mode="PARENT_LAST"/>
+    <modules xmi:type="appdeployment:WebModuleDeployment" xmi:id="WebModuleDeployment_1452709375246" deploymentId="1" startingWeight="10000" uri="AirPRzWeb.war" classloaderMode="PARENT_LAST" containsEJBContent="0">
+      <targetMappings xmi:id="DeploymentTargetMapping_1452709375247" target="ServerTarget_1452709375246"/>
+      <classloader xmi:id="Classloader_1452709375247"/>
+    </modules>
+    <modules xmi:type="appdeployment:WebModuleDeployment" xmi:id="WebModuleDeployment_1452709375247" deploymentId="1" startingWeight="10000" uri="AirPRzWebServices.war" classloaderMode="PARENT_LAST" containsEJBContent="0">
+      <targetMappings xmi:id="DeploymentTargetMapping_1452709375248" target="ServerTarget_1452709375246"/>
+      <classloader xmi:id="Classloader_1452709375248"/>
+    </modules>
+    <properties xmi:id="Property_1452709375246" name="metadata.complete" value="false"/>
+  </deployedObject>
+  <deploymentTargets xmi:type="appdeployment:ServerTarget" xmi:id="ServerTarget_1452709375246" name="server1" nodeName="WIN-04CCRHOFG9NNode01"/>
+</appdeployment:Deployment>

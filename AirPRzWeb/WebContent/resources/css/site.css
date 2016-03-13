@@ -1,0 +1,12 @@
+html {
+	font-family: sans-serif;
+}
+
+.button {
+	padding: .5rem;
+}
+
+input {
+	width: 100%;
+	box-sizing: border-box;
+}

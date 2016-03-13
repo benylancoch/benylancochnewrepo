@@ -1,0 +1,20 @@
+.login-container {
+	position: absolute;
+	top: 50%;
+	margin-top: -4.5rem;
+	left: 0;
+	width: 100%;
+	padding: 2rem 0 2rem 0;
+	background-color: #f5f5f5;
+}
+
+.login-container .login-form {
+	width: 20rem;
+	margin: 0 auto;
+	height: 5.5rem;
+}
+
+.login-container .login-form div {
+	height: 1.5rem;
+	width: 20rem;
+}
