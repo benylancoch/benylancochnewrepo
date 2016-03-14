@@ -1,5 +1,8 @@
 package com.airprz.service.impl;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import com.airprz.data.UserDao;
 import com.airprz.data.impl.UserDaoImpl;
 import com.airprz.model.User;
@@ -14,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User authenticateUser(String email, String password) {
+	public User authenticateUser(String email, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		User user = null;
 		Long userId = null;
 		
@@ -39,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User addUser(String email, String password, Long level,
 			String firstname, String lastname, Long honorific, String phone,
-			String name3rd, String phone3rd) {
+			String name3rd, String phone3rd) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		
 		User user = null;
 		if (email != null && password != null && level != null && firstname != null && lastname != null && honorific != null
@@ -65,7 +68,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User addUser(String email, String password, Long level,
-			String firstname, String lastname, Long honorific, String phone) {
+			String firstname, String lastname, Long honorific, String phone) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		User user = null;
 		if (email != null && password != null && level != null && firstname != null && lastname != null && honorific != null
 				&& phone != null && !"".equals(email) && !"".equals(password) && !"".equals(firstname) && !"".equals(lastname)
@@ -86,7 +89,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(Long userId, String email, String password,
 			Long level, String firstname, String lastname, Long honorific,
-			String phone, String name3rd, String phone3rd) {
+			String phone, String name3rd, String phone3rd) throws NoSuchAlgorithmException, InvalidKeySpecException {
 	
 	
 	User user = userDao.getUser(userId);
@@ -116,7 +119,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(Long userId, String email, String password,
 			Long level, String firstname, String lastname, Long honorific,
-			String phone) {
+			String phone) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		User user = userDao.getUser(userId);
 		if (user != null) {
 			user = new User();

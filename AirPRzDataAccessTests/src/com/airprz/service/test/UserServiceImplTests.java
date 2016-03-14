@@ -1,5 +1,7 @@
 package com.airprz.service.test;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -27,13 +29,13 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenAuthenticating_givenValidEmailAndPassword_itShouldReturnUserObject() {
+	public void whenAuthenticating_givenValidEmailAndPassword_itShouldReturnUserObject() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
 		
-		final Long validUserId = new Long(1);
-		final String validEmail = "test@mail.com";
+		final Long validUserId;
+		final String validEmail = "test123456@mail.com";
 		final String validPassword = "123";
 		final Long validLevel = new Long(0);
 		final String validFirstName = "Sebastian";
@@ -45,7 +47,9 @@ public class UserServiceImplTests {
 		final UserService userService = new UserServiceImpl();
 		
 		//Act
-		User user = userService.authenticateUser(validEmail, validPassword);
+		User user = userService.addUser(validEmail, validPassword, validLevel, validFirstName, validLastName, validHonorific, validPhone, validName3rd, validPhone3rd); 
+		validUserId = user.getId();
+		user = userService.authenticateUser(validEmail, validPassword);
 		
 		//Assert
 		Assert.assertNotNull(user);
@@ -61,7 +65,7 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenAuthentication_givenInvalidEmail_itShouldReturnNull() {
+	public void whenAuthentication_givenInvalidEmail_itShouldReturnNull() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		final String invalidEmail = "tester@invalid.com";
 		final String invalidPassword = "123456";
@@ -75,21 +79,30 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenAuthentication_givenInvalidPassword_itShouldReturnNull() {
+	public void whenAuthentication_givenInvalidPassword_itShouldReturnNull() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
-		final String validEmail = "test@mail.com";
-		final String invalidPassword = "123456";
+		final String validEmail = "test123456@mail.com";
+		final String validPassword = "123";
+		final Long validLevel = new Long(0);
+		final String validFirstName = "Sebastian";
+		final String validLastName = "Wcislo";
+		final Long validHonorific = new Long(0);
+		final String validPhone = "1234567890";
+		final String validName3rd = "John Doe";
+		final String validPhone3rd = "0987654321";
+		final String invalidPassword = "invalid";
 		final UserService userService = new UserServiceImpl();
-				
+		
 		//Act
-		User user = userService.authenticateUser(validEmail, invalidPassword);
+		User user = userService.addUser(validEmail, validPassword, validLevel, validFirstName, validLastName, validHonorific, validPhone, validName3rd, validPhone3rd); 
+		user = userService.authenticateUser(validEmail, invalidPassword);
 			
 		//Assert
 		Assert.assertNull(user);
 	}
 	
 	@Test
-	public void whenAddingNewUser_givenValidData_itShouldReturnUserObject() {
+	public void whenAddingNewUser_givenValidData_itShouldReturnUserObject() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
@@ -124,7 +137,7 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenAddingNewUser_givenValidData_NoOptionalData_itShouldReturnUserObject() {
+	public void whenAddingNewUser_givenValidData_NoOptionalData_itShouldReturnUserObject() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
@@ -157,7 +170,7 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenAddingNewUser_givenUsedEmail_itShouldReturnNull() {
+	public void whenAddingNewUser_givenUsedEmail_itShouldReturnNull() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
@@ -182,7 +195,7 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenUpdatingUser_givenValidData_itShouldReturnUserObject() {
+	public void whenUpdatingUser_givenValidData_itShouldReturnUserObject() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
@@ -217,7 +230,7 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenUpdatingUser_givenValidData_NoOptionalData_itShouldReturnUserObject() {
+	public void whenUpdatingUser_givenValidData_NoOptionalData_itShouldReturnUserObject() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
@@ -250,7 +263,7 @@ public class UserServiceImplTests {
 	}
 	
 	@Test
-	public void whenUpdatingUser_givenUsedEmail_itShouldReturnNull() {
+	public void whenUpdatingUser_givenUsedEmail_itShouldReturnNull() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		//Arrange
 		//INSERT INTO BAZA.USERS (EMAIL, PASSWORD, LEVEL, FIRSTNAME, LASTNAME, HONORIFIC, PHONE, NAME_3RD, PHONE_3RD) VALUES ("
 		//+"'test@mail.com', '123', 0, 'Sebastian', 'Wcislo', '0', '1234567890', 'John Doe', '0987654321')");
