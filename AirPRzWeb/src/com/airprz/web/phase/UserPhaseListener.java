@@ -1,4 +1,4 @@
-package com.listmanager.web.phase;
+package com.airprz.web.phase;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
-import com.listmanager.web.model.UserBean;
+import com.airprz.web.model.UserBean;
 
 public class UserPhaseListener implements PhaseListener {
 	@Override
@@ -21,7 +21,7 @@ public class UserPhaseListener implements PhaseListener {
 	public void beforePhase(PhaseEvent pe) {
 		FacesContext facesContext = pe.getFacesContext();
 		ExternalContext externalContext = facesContext.getExternalContext();
-		if (!"/login.xhtml".equals(externalContext.getRequestPathInfo())) {
+		if (!"/login.xhtml".equals(externalContext.getRequestPathInfo()) && !"/register.xhtml".equals(externalContext.getRequestPathInfo())) {
 			Application application = facesContext.getApplication();
 			UserBean userBean = (UserBean) application.evaluateExpressionGet(facesContext, "#{userBean}", UserBean.class);
 			

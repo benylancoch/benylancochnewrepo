@@ -1,14 +1,14 @@
-package com.listmanager.web.controller;
+package com.airprz.web.controller;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import com.airprz.web.model.ListItemBean;
+import com.airprz.web.model.UserBean;
 import com.listmanager.model.ListItem;
 import com.listmanager.service.ListItemService;
 import com.listmanager.service.impl.ListItemServiceImpl;
-import com.listmanager.web.model.ListItemBean;
-import com.listmanager.web.model.UserBean;
 
 @ManagedBean
 @RequestScoped

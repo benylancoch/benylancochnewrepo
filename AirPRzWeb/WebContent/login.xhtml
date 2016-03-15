@@ -4,7 +4,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>Login - List Manager</title>
+	<title>Login - AirPRz</title>
 	<h:outputStylesheet library="css" name="site.css" />
 	<h:outputStylesheet library="css" name="login.css" />
 </h:head>
@@ -12,20 +12,21 @@
 	<div class="login-container">
 		<h:form styleClass="login-form">
 			<div>
-				<h:outputText value="Username" />:
+				<h:outputText value="Email address" />:
 			</div>
 			<div>
-			<h:inputText value="#{userBean.username}" />
+			<h:inputText value="#{userBean.email}" />
 			</div>
 			<div>
 				<h:outputText value="Password" />:
 			</div>
 			<div>
-			<h:inputSecret value="#{userBean.username}" />
+			<h:inputSecret value="#{userBean.password}" />
 			</div>
 			<div>
 				<h:commandButton styleClass="button" value="Login"
 					action="#{loginController.login}" />
+				<h:outputLink value="register.xhtml">Register new user</h:outputLink>
 			</div>
 		</h:form>
 	</div>

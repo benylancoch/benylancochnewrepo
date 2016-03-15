@@ -1,4 +1,4 @@
-package com.listmanager.web.model;
+package com.airprz.web.model;
 
 import java.util.ResourceBundle;
 

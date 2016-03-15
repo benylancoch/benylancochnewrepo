@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD.xhtmal1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Users</title>
+	<h:outputStylesheet library="css" name="site.css" />
+	<h:outputStylesheet library="css" name="list.css" />
+</h:head>
+<h:body>
+	<div class="row">
+		<h1>
+			<h:outputText value="Hello, #{userBean.firstname} #{userBean.lastname}" />
+		</h1>
+		
+		<h:outputText value="User data:" /><br/>
+		<h:outputText value="User Id: #{userBean.userId}" /><br/>
+		<h:outputText value="Email: #{userBean.email}" /><br/>
+		<h:outputText value="Password (should be blank): #{userBean.password}" /><br/>
+		<h:outputText value="Level: #{userBean.level}" /><br/>
+		<h:outputText value="Firstname: #{userBean.firstname}" /><br/>
+		<h:outputText value="Lastname: #{userBean.lastname}" /><br/>
+		<h:outputText value="Honorific: #{userBean.honorific}" /><br/>
+		<h:outputText value="Phone: #{userBean.phone}" /><br/>
+		<h:outputText value="Name of 3rd person: #{userBean.name3rd}" /><br/>
+		<h:outputText value="Phone to 3rd person: #{userBean.phone3rd}" /><br/>
+		
+		
+	</div>
+</h:body>
+</html>
