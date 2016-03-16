@@ -2,9 +2,12 @@ package com.airprz.service.impl;
 
 import java.util.List;
 
+import com.airprz.data.AirportDao;
+import com.airprz.data.impl.AirportDaoImpl;
 import com.airprz.model.Airport;
+import com.airprz.service.AirportService;
 
-public class AirportServiceImpl {
+public class AirportServiceImpl implements AirportService {
 	
 	private final AirportDao airportDao;
 	
@@ -41,7 +44,7 @@ public class AirportServiceImpl {
 			airport.setCountry(country);
 			airport.setAddress(address);
 			airport.setLocation(location);
-			airport = airportDao.saveUser(airport);
+			airport = airportDao.saveAirport(airport);
 		}
 		
 		return airport;
@@ -53,12 +56,13 @@ public class AirportServiceImpl {
 		
 		if (airport != null) {
 			airport = new Airport();
+			airport.setAirportId(airportId);
 			airport.setName(name);
 			airport.setCity(city);
 			airport.setCountry(country);
 			airport.setAddress(address);
 			airport.setLocation(location);
-			airport = airportDao.saveUser(airport);
+			airport = airportDao.saveAirport(airport);
 		}
 		else {
 			airport = null;

@@ -56,14 +56,14 @@ public class DataSourceSetupUtil {
 				+"AIRPORT_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY , "
 				+"NAME VARCHAR(255) NOT NULL, "
 				+"CITY VARCHAR(255) NOT NULL, "
-				+"COUNTRY VARCHAR(2) NOT NULL, "
+				+"COUNTRY VARCHAR(255) NOT NULL, "
 				+"ADDRESS VARCHAR(255) NOT NULL, "
 				+"LOCATION VARCHAR(19))");
 
 		stmt.executeUpdate("INSERT INTO BAZA.AIRPORTS (NAME, CITY, COUNTRY, ADDRESS) VALUES ("
-				+"'KRAKOW INTERNATIONAL AIRPORT', 'KRAKOW', 'PL', 'SOME STREET 2')");
+				+"'KRAKOW INTERNATIONAL AIRPORT', 'KRAKOW', 'POLAND', 'SOME STREET 2')");
 		stmt.executeUpdate("INSERT INTO BAZA.AIRPORTS (NAME, CITY, COUNTRY, ADDRESS) VALUES ("
-				+"'RZESZOW INTERNATIONAL AIRPORT', 'RZESZOW', 'PL', 'SOME STREET 2')");
+				+"'RZESZOW INTERNATIONAL AIRPORT', 'RZESZOW', 'POLAND', 'SOME STREET 2')");
 		//----------------AIRPORTS-------------------------------------------
 		
 		//----------------FLIGHTS-------------------------------------------
@@ -77,8 +77,6 @@ public class DataSourceSetupUtil {
 				+"ARRIVAL_PLACE INTEGER NOT NULL, "
 				+"PLANE_NO VARCHAR(10) NOT NULL)");
 
-		stmt.executeUpdate("INSERT INTO BAZA.AIRPORTS (NAME, CITY, COUNTRY, ADDRESS) VALUES ("
-						+"'KRAKOW INTERNATIONAL AIRPORT', 'KRAKOW', 'PL', 'SOME STREET 2')");
 		//----------------FLIGHTS-------------------------------------------
 		
 		//----------------FLIGHTS_SEATS-------------------------------------------
@@ -103,6 +101,8 @@ public class DataSourceSetupUtil {
 
 		stmt.executeUpdate("INSERT INTO BAZA.PLANES (PLANE_NO, MANUFACTURER, MODEL, CLASSES, SEATS) VALUES ("
 						+"'AIR001', 'AIRBUS', 'A380', 3, 100)");
+		stmt.executeUpdate("INSERT INTO BAZA.PLANES (PLANE_NO, MANUFACTURER, MODEL, CLASSES, SEATS) VALUES ("
+				+"'AIR002', 'AIRBUS', 'A380', 3, 200)");
 		//----------------PLANES-------------------------------------------
 		
 		//----------------PROMO_CODES-------------------------------------------
