@@ -7,8 +7,8 @@ public class FlightSeat {
 	private Long seatNo;
 	private String free;
 	private String whereLoc;
-	private Plane planeNo;
-	private Flight flightId;
+	private Plane plane;
+	private Flight flight;
 	
 	public Long getFsId() {
 		return fsId;
@@ -40,17 +40,17 @@ public class FlightSeat {
 	public void setWhereLoc(String whereLoc) {
 		this.whereLoc = whereLoc;
 	}
-	public Plane getPlaneNo() {
-		return planeNo;
+	public Plane getPlane() {
+		return plane;
 	}
-	public void setPlaneNo(Plane planeNo) {
-		this.planeNo = planeNo;
+	public void setPlane(Plane planeNo) {
+		this.plane = planeNo;
 	}
-	public Flight getFlightId() {
-		return flightId;
+	public Flight getFlight() {
+		return flight;
 	}
-	public void setFlightId(Flight flightId) {
-		this.flightId = flightId;
+	public void setFlight(Flight flightId) {
+		this.flight = flightId;
 	}
 	
 

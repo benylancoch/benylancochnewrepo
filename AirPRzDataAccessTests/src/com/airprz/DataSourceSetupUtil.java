@@ -259,6 +259,29 @@ public class DataSourceSetupUtil {
 				+"2, 1)");
 		stmt.executeUpdate("INSERT INTO BAZA.USR_PCODES (USER_ID, CODE_ID) VALUES ("
 				+"2, 3)");
+		//UserPromoCode
+		
+		//Flight
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS (FLIGHT_NO, STARTS, ENDS, BASE_PRICE, DEPARTURE_PLACE, ARRIVAL_PLACE, PLANE_NO) VALUES ("
+				+"'APRZ85', parseDateTime('2016-04-01-21.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-04-02-02.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
+				+ "250.29, 1, 2, 'AIR001')");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS (FLIGHT_NO, STARTS, ENDS, BASE_PRICE, DEPARTURE_PLACE, ARRIVAL_PLACE, PLANE_NO) VALUES ("
+				+"'APRZ95', parseDateTime('2016-05-01-21.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-05-02-02.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
+				+ "250.29, 1, 2, 'AIR001')");
+		//Flight
+		
+		//FlightSeat
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS_SEATS (CLASS, SEAT_NO, FREE, WHERE_LOC, PLANE_NO, FLIGHT_ID) VALUES ("
+				+"1, 101, 'Y','WF', 'AIR001', 1)");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS_SEATS (CLASS, SEAT_NO, FREE, WHERE_LOC, PLANE_NO, FLIGHT_ID) VALUES ("
+				+"1, 102, 'Y','WF', 'AIR001', 1)");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS_SEATS (CLASS, SEAT_NO, FREE, WHERE_LOC, PLANE_NO, FLIGHT_ID) VALUES ("
+				+"2, 201, 'Y','WF', 'AIR001', 1)");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS_SEATS (CLASS, SEAT_NO, FREE, WHERE_LOC, PLANE_NO, FLIGHT_ID) VALUES ("
+				+"1, 103, 'N','WF', 'AIR001', 1)");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS_SEATS (CLASS, SEAT_NO, FREE, WHERE_LOC, PLANE_NO, FLIGHT_ID) VALUES ("
+				+"1, 101, 'Y','WF', 'AIR001', 2)");
+		//FlightSeat
 		//---------------------------------DATA-ADDITION-----------------------------------
 		
 		stmt.close();
