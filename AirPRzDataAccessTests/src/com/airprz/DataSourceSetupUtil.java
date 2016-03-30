@@ -268,6 +268,15 @@ public class DataSourceSetupUtil {
 		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS (FLIGHT_NO, STARTS, ENDS, BASE_PRICE, DEPARTURE_PLACE, ARRIVAL_PLACE, PLANE_NO) VALUES ("
 				+"'APRZ95', parseDateTime('2016-05-01-21.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-05-02-02.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
 				+ "250.29, 1, 2, 'AIR001')");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS (FLIGHT_NO, STARTS, ENDS, BASE_PRICE, DEPARTURE_PLACE, ARRIVAL_PLACE, PLANE_NO) VALUES ("
+				+"'APRZ96', parseDateTime('2016-05-01-21.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-05-02-02.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
+				+ "250.29, 2, 1, 'AIR001')");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS (FLIGHT_NO, STARTS, ENDS, BASE_PRICE, DEPARTURE_PLACE, ARRIVAL_PLACE, PLANE_NO) VALUES ("
+				+"'APRZ97', parseDateTime('2016-05-01-21.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-05-02-02.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
+				+ "250.29, 1, 2, 'AIR002')");
+		stmt.executeUpdate("INSERT INTO BAZA.FLIGHTS (FLIGHT_NO, STARTS, ENDS, BASE_PRICE, DEPARTURE_PLACE, ARRIVAL_PLACE, PLANE_NO) VALUES ("
+				+"'APRZ98', parseDateTime('2016-01-01-21.00.00', 'yyyy-MM-dd-hh.mm.ss'), parseDateTime('2016-05-02-02.00.00', 'yyyy-MM-dd-hh.mm.ss'), "
+				+ "250.29, 1, 2, 'AIR001')");
 		//Flight
 		
 		//FlightSeat
@@ -319,27 +328,4 @@ public class DataSourceSetupUtil {
 		connection.close();
 	}
 	
-	/*public static void insertListItemForDefaultUser(String value) throws SQLException {
-		Connection connection = DbConnector.getConnection();
-		PreparedStatement stmt = connection.prepareStatement("INSERT INTO TEST.LIST_ITEM (USER_ID, VALUE) VALUES (1, ?)");
-		stmt.setString(1, value);
-		stmt.executeUpdate();
-		stmt.close();
-		connection.close();
-	}
-	
-	public static long getListItemsCount() throws SQLException {
-		Connection connection = DbConnector.getConnection();
-		ResultSet rs = null;
-		PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(*) AS LIST_ITEMS_COUNT FROM TEST.LIST_ITEM");
-		
-		rs = stmt.executeQuery();
-		if(rs.next()) {
-			return rs.getLong("LIST_ITEMS_COUNT");
-		}
-		else {
-			return 0L;
-		}
-		
-	}*/
 }
