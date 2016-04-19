@@ -19,9 +19,10 @@ public class UserPhaseListener implements PhaseListener {
 	
 	@Override
 	public void beforePhase(PhaseEvent pe) {
-		FacesContext facesContext = pe.getFacesContext();
+		/*FacesContext facesContext = pe.getFacesContext();
 		ExternalContext externalContext = facesContext.getExternalContext();
-		if (!"/login.xhtml".equals(externalContext.getRequestPathInfo()) && !"/register.xhtml".equals(externalContext.getRequestPathInfo())) {
+		if (!"/login.xhtml".equals(externalContext.getRequestPathInfo()) && !"/register.xhtml".equals(externalContext.getRequestPathInfo()) 
+				&& !"/templates/default/main.xhtml".equals(externalContext.getRequestPathInfo()) && !"/index.xhtml".equals(externalContext.getRequestPathInfo())) { 
 			Application application = facesContext.getApplication();
 			UserBean userBean = (UserBean) application.evaluateExpressionGet(facesContext, "#{userBean}", UserBean.class);
 			
@@ -33,7 +34,7 @@ public class UserPhaseListener implements PhaseListener {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
 	}
 	
 	@Override

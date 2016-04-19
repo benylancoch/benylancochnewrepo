@@ -27,7 +27,7 @@
 		/faces/*</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>faces/login.xhtml</welcome-file>
+		<welcome-file>faces/index.xhtml</welcome-file>
 	</welcome-file-list>
 	<resource-ref>
 		<description />

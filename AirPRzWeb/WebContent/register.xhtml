@@ -1,39 +1,33 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD.xhtmal1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-	<title>Register new user</title>
-	<h:outputStylesheet library="css" name="site.css" />
-	<h:outputStylesheet library="css" name="login.css" />
-</h:head>
-<h:body>
-	<div class="login-container">
-		<h:form styleClass="login-form">
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+		<h:form>
 			<div>
 				<h:outputText value="Email address" />:
 			</div>
 			<div>
-			<h:inputText value="#{userBean.email}" />
+			<h:inputText id="emailF" value="#{userBean.email}" />
 			</div>
 			<div>
 				<h:outputText value="Password" />:
 			</div>
 			<div>
-			<h:inputSecret value="#{userBean.password}" />
+			<h:inputSecret id="passwordF" value="#{userBean.password}" />
 			</div>
 			<div>
 				<h:outputText value="Confirm password" />:
 			</div>
 			<div>
-			<h:inputSecret value="#{userBean.cPassword}" />
+			<h:inputSecret id="cPasswordF" value="#{userBean.cPassword}" />
 			</div>
 			<div>
 				<h:outputText value="Level" />:
 			</div>
 			<div>
-			<h:selectOneMenu value="#{userBean.level}">
+			<h:selectOneMenu id="levelF" value="#{userBean.level}">
 			   	<f:selectItem itemValue="0" itemLabel="User" />
 			   	<f:selectItem itemValue="1" itemLabel="Employee" />
 			   	<f:selectItem itemValue="2" itemLabel="Admin" />
@@ -43,19 +37,19 @@
 				<h:outputText value="Firstname" />:
 			</div>
 			<div>
-			<h:inputText value="#{userBean.firstname}" />
+			<h:inputText id="fNameF" value="#{userBean.firstname}" />
 			</div>
 			<div>
 				<h:outputText value="Lastname" />:
 			</div>
 			<div>
-			<h:inputText value="#{userBean.lastname}" />
+			<h:inputText id="lNameF" value="#{userBean.lastname}" />
 			</div>
 			<div>
 				<h:outputText value="Honorific" />:
 			</div>
 			<div>
-			<h:selectOneMenu value="#{userBean.honorific}">
+			<h:selectOneMenu id="honorificF" value="#{userBean.honorific}">
 			   	<f:selectItem itemValue="0" itemLabel="Mr" />
 			   	<f:selectItem itemValue="1" itemLabel="Ms" />
 			   	<f:selectItem itemValue="2" itemLabel="Mrs" />
@@ -66,26 +60,25 @@
 				<h:outputText value="Phone number" />:
 			</div>
 			<div>
-			<h:inputText value="#{userBean.phone}" />
+			<h:inputText id="phoneF" value="#{userBean.phone}" />
 			</div>
 			<div>
 				<h:outputText value="Name of 3rd person to which We should contact in unexpected cases" />:
 			</div>
 			<div>
-			<h:inputText value="#{userBean.name3rd}" />
+			<h:inputText id="name3rdF" value="#{userBean.name3rd}" />
 			</div>
 			<div>
 				<h:outputText value="Phone number of 3rd person" />:
 			</div>
 			<div>
-			<h:inputText value="#{userBean.phone3rd}" />
+			<h:inputText id="phone3rdF" value="#{userBean.phone3rd}" />
 			</div>
 			<div>
-				<h:commandButton styleClass="button" value="Register"
+				<h:commandButton id="registerB" value="Register"
 					action="#{loginController.register}" />
-				<h:outputLink value="login.xhtml">Login</h:outputLink>
+				<h:outputLink id="loginL" value="#">Login</h:outputLink>
 			</div>
 		</h:form>
-	</div>
-</h:body>
-</html>
+</ui:define>
+</ui:composition>

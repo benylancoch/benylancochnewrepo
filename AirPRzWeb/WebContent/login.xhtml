@@ -1,16 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD.xhtmal1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-	<title>Login - AirPRz</title>
-	<h:outputStylesheet library="css" name="site.css" />
-	<h:outputStylesheet library="css" name="login.css" />
-</h:head>
-<h:body>
-	<div class="login-container">
-		<h:form styleClass="login-form">
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+	<div>
+		<h:form>
 			<div>
 				<h:outputText value="Email address" />:
 			</div>
@@ -30,5 +25,5 @@
 			</div>
 		</h:form>
 	</div>
-</h:body>
-</html>
+    </ui:define>
+</ui:composition>
