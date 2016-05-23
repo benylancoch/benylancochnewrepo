@@ -13,6 +13,7 @@
                 </button>
                 <a class="navbar-brand" href="#{request.contextPath}/index.xhtml">AirPRz</a>
             </div>
+            <h:form>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                	    <li><h:link value="Users" outcome="/views/users/index?faces-redirect=true" rendered="#{userBean.level == 2}"/></li>
@@ -22,12 +23,13 @@
                     <li><h:link value="Register" outcome="/register?faces-redirect=true" rendered="#{userBean.userId == null}"/>
                     	<h:link value="Profile" outcome="/views/user/profile?faces-redirect=true" rendered="#{userBean.userId != null}"/></li>
                     <li><h:link value="Login" outcome="/login?faces-redirect=true" rendered="#{userBean.userId == null}"/>
-                    <h:form>
+                    
                     		<h:commandLink value="Logout" action="#{dashboardController.logout}" rendered="#{userBean.userId != null}" />
-               		</h:form>
+               		
                     </li>
                 </ul>
             </div>
+            </h:form>
         </div>
     </div>
 </ui:composition>

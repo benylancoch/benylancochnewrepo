@@ -13,7 +13,7 @@ public class DashboardController {
 	
 	public String logout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return "index?faces-redirect=true";
+		return "/index?faces-redirect=true";
 	}
 
 }

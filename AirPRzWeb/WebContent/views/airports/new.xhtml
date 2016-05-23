@@ -1,0 +1,46 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+    
+    	<div class="container col-md-6">
+    		<h1>Add new Airport</h1>
+                <h:form>
+				<div class="form-group">
+					<h:outputText value="Airport name: " styleClass="control-label" />
+		
+					<h:inputText value="#{airportBean.name}" styleClass="form-control" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="City: " styleClass="control-label" />
+		
+					<h:inputText value="#{airportBean.city}" styleClass="form-control" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Country: " styleClass="control-label" />
+		
+					<h:selectOneMenu id="country" value="#{airportBean.country}" styleClass="form-control">
+					   	<f:selectItem itemValue="PL" itemLabel="Poland" />
+					   	<f:selectItem itemValue="UK" itemLabel="United Kingdom" />
+					   	<f:selectItem itemValue="US" itemLabel="United States of Americe" />
+					   	<f:selectItem itemValue="DE" itemLabel="Germany" />
+					</h:selectOneMenu>
+				</div>
+				<div class="form-group">
+					<h:outputText value="Address: " styleClass="control-label" />
+		
+					<h:inputText value="#{airportBean.address}" styleClass="form-control" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Location: " styleClass="control-label" />
+		
+					<h:inputText value="#{airportBean.location}" styleClass="form-control" autocomplete="off" />
+				</div>
+				<h:commandButton value="Add new airport" action="#{airportController.saveAirport}" styleClass="btn btn-primary" />
+				#{' '}<h:commandButton value="Cancel" action="index?faces-redirect=true" styleClass="btn btn-danger" />
+			</h:form>
+		</div>
+</ui:define>
+</ui:composition>
