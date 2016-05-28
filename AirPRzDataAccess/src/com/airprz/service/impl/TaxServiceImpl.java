@@ -2,6 +2,7 @@ package com.airprz.service.impl;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import com.airprz.data.TaxDao;
@@ -36,7 +37,7 @@ public class TaxServiceImpl implements TaxService {
 	}
 	
 	@Override
-	public Tax addTax(BigDecimal value, String description, Timestamp validFrom, Timestamp validTo) {
+	public Tax addTax(BigDecimal value, String description, Date validFrom, Date validTo) {
 		Tax tax = null;
 		
 		if (value != null && description != null && validFrom != null
@@ -44,8 +45,13 @@ public class TaxServiceImpl implements TaxService {
 			tax = new Tax();
 			tax.setValue(value);
 			tax.setDescription(description);
-			tax.setValidFrom(validFrom);
-			tax.setValidTo(validTo);
+			tax.setValidFrom(new Timestamp(validFrom.getTime()));
+			if(validTo != null) {
+				tax.setValidTo(new Timestamp(validFrom.getTime()));
+			}
+			else {
+				tax.setValidTo(null);
+			}
 			tax = taxDao.saveTax(tax);
 		}
 		else {
@@ -56,7 +62,7 @@ public class TaxServiceImpl implements TaxService {
 	}
 	
 	@Override
-	public Tax updateTax(Long taxId, BigDecimal value, String description, Timestamp validFrom, Timestamp validTo) {
+	public Tax updateTax(Long taxId, BigDecimal value, String description, Date validFrom, Date validTo) {
 		
 		Tax tax = taxDao.getTax(taxId);
 		
@@ -65,8 +71,13 @@ public class TaxServiceImpl implements TaxService {
 			tax.setTaxId(taxId);
 			tax.setValue(value);
 			tax.setDescription(description);
-			tax.setValidFrom(validFrom);
-			tax.setValidTo(validTo);
+			tax.setValidFrom(new Timestamp(validFrom.getTime()));
+			if(validTo != null) {
+				tax.setValidTo(new Timestamp(validFrom.getTime()));
+			}
+			else {
+				tax.setValidTo(null);
+			}
 			tax = taxDao.saveTax(tax);
 		}
 		else {

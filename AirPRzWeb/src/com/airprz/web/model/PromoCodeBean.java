@@ -1,7 +1,7 @@
 package com.airprz.web.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -23,8 +23,10 @@ public class PromoCodeBean {
 	private BigDecimal discount;
 	private String multiple;
 	private String used;
-	private Timestamp validFrom;
-	private Timestamp validTo;
+	private Date validFrom;
+	private Date validTo;
+	
+	private Boolean usedForm;
 	
 	public PromoCodeBean() {
 		promoCode = new PromoCodeServiceImpl();
@@ -78,19 +80,19 @@ public class PromoCodeBean {
 		this.used = used;
 	}
 
-	public Timestamp getValidFrom() {
+	public Date getValidFrom() {
 		return validFrom;
 	}
 
-	public void setValidFrom(Timestamp validFrom) {
+	public void setValidFrom(Date validFrom) {
 		this.validFrom = validFrom;
 	}
 
-	public Timestamp getValidTo() {
+	public Date getValidTo() {
 		return validTo;
 	}
 
-	public void setValidTo(Timestamp validTo) {
+	public void setValidTo(Date validTo) {
 		this.validTo = validTo;
 	}
 
@@ -98,8 +100,20 @@ public class PromoCodeBean {
 		return promoCode;
 	}
 	
-	public List<PromoCode> getListPromoCodes() {
-		return promoCode.getPromoCodes(true);
+	public Boolean getUsedForm() {
+		return usedForm;
 	}
+
+	public void setUsedForm(Boolean usedForm) {
+		this.usedForm = usedForm;
+	}
+	
+//	public List<PromoCode> getListPromoCodes(Boolean used) {
+//		return promoCode.getPromoCodes(used);
+//	}
+	public List<PromoCode> listPromoCodes(Boolean usedForm) {
+		return promoCode.getPromoCodes(usedForm);
+	}
+
 
 }

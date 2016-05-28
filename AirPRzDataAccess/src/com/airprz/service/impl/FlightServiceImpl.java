@@ -2,6 +2,7 @@ package com.airprz.service.impl;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import com.airprz.data.FlightDao;
@@ -25,13 +26,13 @@ public class FlightServiceImpl implements FlightService {
 	}
 	
 	@Override
-	public List<List<Flight>> searchForFlights(Timestamp starts,
+	public List<List<Flight>> searchForFlights(Date starts,
 			Long departurePlace, Long arrivalPlace, int noOfTransfers) {
 		java.util.Date currentDate = new java.util.Date();
 		
 		if(starts.after(currentDate)) {
 			
-			return flightDao.searchForFlights(starts, departurePlace, arrivalPlace, noOfTransfers);
+			return flightDao.searchForFlights(new Timestamp(starts.getTime()), departurePlace, arrivalPlace, noOfTransfers);
 		}
 		else {
 			
@@ -41,8 +42,18 @@ public class FlightServiceImpl implements FlightService {
 	}
 	
 	@Override
-	public List<Flight> getFlightsByTimestamp(Timestamp starts, Timestamp ends) {
-		return flightDao.getFlightsByTimestamp(starts, ends);
+	public List<Flight> getFlightsByDate(Date starts, Date ends) {
+		Timestamp startsT = null;
+		Timestamp endsT = null;
+		
+		if (starts != null) {
+			startsT = new Timestamp(starts.getTime());
+		}
+		
+		if (ends != null) {
+			endsT = new Timestamp(ends.getTime());
+		}
+		return flightDao.getFlightsByTimestamp(startsT, endsT);
 	}
 	
 	@Override
@@ -56,7 +67,7 @@ public class FlightServiceImpl implements FlightService {
 	}
 	
 	@Override
-	public Flight addFlight(String flightNo, Timestamp starts, Timestamp ends,
+	public Flight addFlight(String flightNo, Date starts, Date ends,
 			BigDecimal basePrice, Long departurePlace, Long arrivalPlace,
 			String planeNo) {
 		
@@ -74,8 +85,8 @@ public class FlightServiceImpl implements FlightService {
 			planeObject = new Plane();
 			
 			flight.setFlightNo(flightNo);
-			flight.setStarts(starts);
-			flight.setEnds(ends);
+			flight.setStarts(new Timestamp(starts.getTime()));
+			flight.setEnds(new Timestamp(ends.getTime()));
 			flight.setBasePrice(basePrice);
 			
 			departurePlaceObject.setAirportId(departurePlace);
@@ -96,7 +107,7 @@ public class FlightServiceImpl implements FlightService {
 	
 	@Override
 	public Flight updateFlight(Long flightId, String flightNo,
-			Timestamp starts, Timestamp ends, BigDecimal basePrice,
+			Date starts, Date ends, BigDecimal basePrice,
 			Long departurePlace, Long arrivalPlace, String planeNo) {
 		
 		Flight flight = flightDao.getFlight(flightId);
@@ -110,8 +121,8 @@ public class FlightServiceImpl implements FlightService {
 			
 			flight.setFlightId(flightId);
 			flight.setFlightNo(flightNo);
-			flight.setStarts(starts);
-			flight.setEnds(ends);
+			flight.setStarts(new Timestamp(starts.getTime()));
+			flight.setEnds(new Timestamp(ends.getTime()));
 			flight.setBasePrice(basePrice);
 			
 			departurePlaceObject.setAirportId(departurePlace);

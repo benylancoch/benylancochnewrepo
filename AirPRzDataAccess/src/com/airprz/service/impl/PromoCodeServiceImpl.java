@@ -2,6 +2,7 @@ package com.airprz.service.impl;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import com.airprz.data.PromoCodeDao;
@@ -36,7 +37,7 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 	@Override
 	public PromoCode addPromoCode(String code, String description,
 			BigDecimal discount, String multiple,
-			Timestamp validFrom, Timestamp validTo) {
+			Date validFrom, Date validTo) {
 		PromoCode promoCode = null;
 		
 		if (code != null && description != null && discount != null && multiple != null && validFrom != null
@@ -47,8 +48,13 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 			promoCode.setDiscount(discount);
 			promoCode.setMultiple(multiple);
 			promoCode.setUsed("N");
-			promoCode.setValidFrom(validFrom);
-			promoCode.setValidTo(validTo);
+			promoCode.setValidFrom(new Timestamp(validFrom.getTime()));
+			if(validTo != null) {
+				promoCode.setValidTo(new Timestamp(validTo.getTime()));
+			}
+			else {
+				promoCode.setValidTo(null);
+			}
 			promoCode = promoCodeDao.savePromoCode(promoCode);
 		}
 		else {
@@ -61,7 +67,7 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 	@Override
 	public PromoCode updatePromoCode(Long codeId, String code,
 			String description, BigDecimal discount, String multiple,
-			String used, Timestamp validFrom, Timestamp validTo) {
+			String used, Date validFrom, Date validTo) {
 		PromoCode promoCode = promoCodeDao.getPromoCode(codeId);
 		
 		if (promoCode != null) {
@@ -72,8 +78,13 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 			promoCode.setDiscount(discount);
 			promoCode.setMultiple(multiple);
 			promoCode.setUsed(used);
-			promoCode.setValidFrom(validFrom);
-			promoCode.setValidTo(validTo);
+			promoCode.setValidFrom(new Timestamp(validFrom.getTime()));
+			if(validTo != null) {
+				promoCode.setValidTo(new Timestamp(validTo.getTime()));
+			}
+			else {
+				promoCode.setValidTo(null);
+			}
 			promoCode = promoCodeDao.savePromoCode(promoCode);
 		}
 		else {

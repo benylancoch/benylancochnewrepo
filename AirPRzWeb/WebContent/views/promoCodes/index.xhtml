@@ -10,11 +10,18 @@
                 	<div class="btn-group">
                 		<h:commandButton value="New promotion code" action="#{promoCodeController.redirectNew}" styleClass="btn btn-primary" />
                 	</div>
+                	<div class="btn-group">
+                		<h:commandButton value="Show used" action="#{promoCodeController.showUsed(true)}" styleClass="btn btn-info" 
+                			rendered="#{promoCodeBean.usedForm == false || promoCodeBean.usedForm == null}" />
+                		#{' '}
+                		<h:commandButton value="Hide used" action="#{promoCodeController.showUsed(false)}" styleClass="btn btn-warning" 
+                			rendered="#{promoCodeBean.usedForm == true}" />
+                	</div>
                 	</h:form>
 				<div class="form-group col-md-12">				
 					<div class="table-responsive">
 						<h:form id="promoCodesForm">
-							<h:dataTable value="#{promoCodeBean.listPromoCodes}"
+							<h:dataTable value="#{promoCodeBean.listPromoCodes(promoCodeBean.usedForm)}"
 								 var="item" styleClass="table table-striped">
 								 <h:column>
 								 	<f:facet name="header">Code</f:facet>
@@ -26,7 +33,9 @@
 								 </h:column>
 								 <h:column>
 								 	<f:facet name="header">Discount</f:facet>
-								 	#{item.discount}
+								 	<h:outputText value="#{item.discount}">
+								 		<f:convertNumber type="percent" maxFactorDigits="2"/>
+								 	</h:outputText>
 								 </h:column>
 								 <h:column>
 								 	<f:facet name="header">Multiple use</f:facet>

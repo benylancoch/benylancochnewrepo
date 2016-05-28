@@ -4,11 +4,11 @@
                 xmlns:f="http://java.sun.com/jsf/core"  
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">  
-		<div class="container col-md-6">
+		<div class="container col-md-12">
 			<h1>Flights management</h1>
                 <h:form>
                 	<div class="btn-group">
-                		<h:commandButton value="Add new flight" action="newflight" styleClass="btn btn-primary" />
+                		<h:commandButton value="Add new flight" action="new" styleClass="btn btn-primary" />
                 		<h:commandButton value="Planes" action="/views/planes/index?faces-redirect=true" styleClass="btn btn-info" />
                 		<h:commandButton value="Airports" action="/views/airports/index?faces-redirect=true" styleClass="btn btn-info" />
                 		<h:commandButton value="Promo codes" action="/views/promoCodes/index?faces-redirect=true" styleClass="btn btn-info" />
@@ -16,6 +16,57 @@
                 	</div>
 				<div class="form-group">
 					<h1>Flights table</h1>
+					
+					<div class="form-inline">
+						<h:outputText value="Date : " styleClass="control-label" />
+			
+						<h:inputText id="validFrom" label="Validation error" value="#{flightSearchBean.startDate}" styleClass="form-control" autocomplete="false" >
+							<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+						</h:inputText>
+						
+						#{" - "}
+						<h:inputText id="validTo" label="Validation error" value="#{flightSearchBean.endDate}" styleClass="form-control" autocomplete="false" >
+							<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+						</h:inputText>
+						
+						<div class="btn-group">
+	                		<h:commandButton value="Go" action="management" styleClass="btn btn-primary" />
+	                	</div>
+                	</div>
+                	<h:message for="validFrom" style="color:red" /><br/>
+                	<h:message for="validTo" style="color:red" />
+					<div class="table-responsive">
+							<h:dataTable value="#{flightBean.listFlights(flightSearchBean.startDate, flightSearchBean.endDate)}"
+								 var="item" styleClass="table table-striped">
+								 <h:column>
+								 	<f:facet name="header">Flight no</f:facet>
+								 	#{item.flightNo}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Departure date</f:facet>
+								 	#{item.starts}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Arrival date</f:facet>
+								 	#{item.ends}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Base price</f:facet>
+								 	#{item.basePrice}
+								 </h:column>
+
+								 <h:column>
+								 	<f:facet name="header"></f:facet>
+								 	<div class="btn-group">
+				                		<h:commandButton value="Edit" action="#{flightController.redirectEdit(item)}" styleClass="btn btn-primary" />
+				                	</div>
+				                	#{" "}
+								 	<div class="btn-group">
+				                		<h:commandButton value="Delete" action="#{flightController.deletePlane(item)}" styleClass="btn btn-danger" rendered="#{userBean.level == 2}"/>
+				                	</div>
+								 </h:column>
+							</h:dataTable>
+					</div>
 					
 				</div>
 			</h:form>

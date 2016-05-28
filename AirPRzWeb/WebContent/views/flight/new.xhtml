@@ -1,0 +1,94 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+    
+    	<div class="container col-md-6">
+    		<h1>
+    			<h:outputText value="Add new flight" rendered="#{flightBean.flightId == null}" />
+    			<h:outputText value="Edit #{flightBean.flightNo}" rendered="#{flightBean.flightId != null}" />
+    		</h1>
+
+    		
+                <h:form>
+				<div class="form-group">
+					<h:outputText value="Flight no *: " styleClass="control-label" />
+		
+					<h:inputText id="FlightNo" value="#{flightBean.flightNo}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Flight no field must not be empty" 
+						validatorMessage="Flight no must be less than 7 characters">
+							<f:validateLength maximum="6"/>
+					</h:inputText>
+					<h:message for="FlightNo" style="color:red" />
+				</div>				
+				<div class="form-group">
+					<h:outputText value="Flight's departure date *: " styleClass="control-label" />
+		
+					<h:inputText id="DepartureDate" label="Validation error" value="#{flightBean.starts}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Flight departure date field must not be empty" >
+						<f:convertDateTime pattern="yyyy-MM-dd HH:mm" type="both" />
+					</h:inputText>
+					<h:outputText value="Example: 2016-01-31 23:56" styleClass="text-info" /><br/>
+					<h:message for="DepartureDate" style="color:red" />
+				</div>
+				<div class="form-group">
+					<h:outputText value="Flight's arrival date: *" styleClass="control-label" />
+		
+					<h:inputText id="ArrivalDate" label="Validation error" value="#{flightBean.ends}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Flight arrival date field must not be empty" >
+					<f:convertDateTime pattern="yyyy-MM-dd HH:mm" type="both" />
+					</h:inputText>
+					<h:outputText value="Example: 2016-01-31 23:56" styleClass="text-info" /><br/>
+					<h:message for="ArrivalDate" style="color:red" />
+				</div>
+				
+				<div class="form-group">
+					<h:outputText value="Base price *: " styleClass="control-label" />
+					<div class="input-group">
+						<span class="input-group-addon">€</span>
+						<h:inputText id="BasePrice" label="Validation error" value="#{flightBean.basePrice}" styleClass="form-control" autocomplete="false" 
+							required="true" requiredMessage="Base price field must not be empty" 
+							validatorMessage="Base price must be between 0 and 10000">
+								<f:convertNumber groupingUsed="true" maxFactorDigits="2" type="number" />
+								<f:validateDoubleRange minimum="0.0" maximum="10000.0" for="BasePrice"/>
+						</h:inputText>
+					</div>
+					<h:message for="BasePrice" style="color:red" />
+				</div>
+					
+				<div class="form-group">
+					<h:outputText value="Departure place *: " styleClass="control-label" />
+		
+					<h:selectOneMenu id="departurePlace" value="#{flightBean.departurePlaceId}" styleClass="form-control" >
+					   	<f:selectItems value="#{flightBean.listAirports}" var="departure" itemValue="#{departure.airportId}" itemLabel="#{departure.name}" />
+					</h:selectOneMenu>
+				</div>	
+				
+				<div class="form-group">
+					<h:outputText value="Arrival place *: " styleClass="control-label" />
+		
+					<h:selectOneMenu id="arrivalPlace" value="#{flightBean.arrivalPlaceId}" styleClass="form-control" >
+					   	<f:selectItems value="#{flightBean.listAirports}" var="arrival" itemValue="#{arrival.airportId}" itemLabel="#{arrival.name}" />
+					</h:selectOneMenu>
+				</div>
+				
+				<div class="form-group">
+					<h:outputText value="Plane *: " styleClass="control-label" />
+		
+					<h:selectOneMenu id="plane" value="#{flightBean.planeId}" styleClass="form-control" >
+					   	<f:selectItems value="#{flightBean.listPlanes}" var="plane" itemValue="#{plane.planeId}" 
+					   		itemLabel="#{plane.planeId} | #{plane.manufacturer} #{plane.model} | Classes: #{plane.classes} | Seats: #{plane.seats}" />
+					</h:selectOneMenu>
+				</div>	
+				
+				<h:commandButton id="newButton" value="Add new flight" action="#{flightController.saveFlight}" styleClass="btn btn-primary" 
+				rendered="#{flightBean.flightId == null}"/>
+				<h:commandButton value="Update" action="#{flightController.saveFlight}" styleClass="btn btn-primary" 
+				rendered="#{flightBean.flightId != null}"/>
+				#{' '}<h:link value="Cancel" outcome="management?faces-redirect=true" styleClass="btn btn-danger" />
+			</h:form>
+		</div>
+</ui:define>
+</ui:composition>

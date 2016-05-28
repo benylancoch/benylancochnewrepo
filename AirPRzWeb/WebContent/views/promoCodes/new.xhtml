@@ -8,7 +8,7 @@
     	<div class="container col-md-6">
     		<h1>
     			<h:outputText value="Add new promotion code" rendered="#{promoCodeBean.codeId == null}" />
-    			<h:outputText value="Edit #{promoCodeBean.codeId}" rendered="#{promoCodeBean.codeId != null}" />
+    			<h:outputText value="Edit #{promoCodeBean.code}" rendered="#{promoCodeBean.codeId != null}" />
     		</h1>
 
     		
@@ -36,13 +36,16 @@
 				<div class="form-group">
 					<h:outputText value="Discount value *: " styleClass="control-label" />
 		
-					<h:inputText id="Discount" label="Validation error" value="#{promoCodeBean.description}" styleClass="form-control" autocomplete="false" 
-						required="true" requiredMessage="Discount field must not be empty" 
-						validatorMessage="Number provided must be between 0 and 1">
-							<f:convertNumber type="decimal" />
-							<f:validateDoubleRange minimum="0.0" maximum="1.0" for="Discount"/>
-					</h:inputText>
-					<h:message for="Description" style="color:red" />
+					<div class="input-group">
+						<span class="input-group-addon">%</span>
+						<h:inputText id="Discount" label="Validation error" value="#{promoCodeBean.discount}" styleClass="form-control" autocomplete="false" 
+							required="true" requiredMessage="Discount field must not be empty" 
+							validatorMessage="Number provided must be between 0 and 100">
+								<f:convertNumber type="number" maxFactorDigits="0"/>
+								<f:validateDoubleRange minimum="0.0" maximum="100.0" for="Discount"/>
+						</h:inputText>
+					</div>
+					<h:message for="Discount" style="color:red" />
 				</div>
 				<div class="form-group">
 					<h:outputText value="Multiple use *: " styleClass="control-label" />
@@ -67,14 +70,18 @@
 		
 					<h:inputText id="validFrom" label="Validation error" value="#{promoCodeBean.validFrom}" styleClass="form-control" autocomplete="false" 
 						required="true" requiredMessage="Valid from date field must not be empty" >
+						<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" type="both" />
 					</h:inputText>
+					<h:outputText value="Example: 2016-01-31 23:56:55" styleClass="text-info" /><br/>
 					<h:message for="validFrom" style="color:red" />
 				</div>
 				<div class="form-group">
 					<h:outputText value="Valid to date: " styleClass="control-label" />
 		
 					<h:inputText id="validTo" label="Validation error" value="#{promoCodeBean.validTo}" styleClass="form-control" autocomplete="false" >
+					<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" type="both" />
 					</h:inputText>
+					<h:outputText value="Example: 2016-01-31 23:56:55" styleClass="text-info" /><br/>
 					<h:message for="validTo" style="color:red" />
 				</div>
 				<h:commandButton value="Add new promo code" action="#{promoCodeController.savePromoCode}" styleClass="btn btn-primary" 

@@ -1,5 +1,8 @@
 package com.airprz.web.controller;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -25,11 +28,12 @@ public class PromoCodeController {
 	public String savePromoCode() {
 		
 		if(promoCodeBean.getCodeId() == null) {
-			promoCodeService.addPromoCode(promoCodeBean.getCode(), promoCodeBean.getDescription(), promoCodeBean.getDiscount(), 
+			promoCodeService.addPromoCode(promoCodeBean.getCode(), promoCodeBean.getDescription(), promoCodeBean.getDiscount().divide(new BigDecimal("100")), 
 					promoCodeBean.getMultiple(), promoCodeBean.getValidFrom(), promoCodeBean.getValidTo());
 		}
 		else {
-			promoCodeService.updatePromoCode(promoCodeBean.getCodeId(), promoCodeBean.getCode(), promoCodeBean.getDescription(), promoCodeBean.getDiscount(), 
+			promoCodeService.updatePromoCode(promoCodeBean.getCodeId(), promoCodeBean.getCode(), promoCodeBean.getDescription(), 
+					promoCodeBean.getDiscount().divide(new BigDecimal("100")), 
 					promoCodeBean.getMultiple(), promoCodeBean.getUsed(), promoCodeBean.getValidFrom(), promoCodeBean.getValidTo());
 		}
 		
@@ -46,7 +50,7 @@ public class PromoCodeController {
 		promoCodeBean.setMultiple(promoCode.getMultiple());
 		promoCodeBean.setUsed(promoCode.getUsed());
 		promoCodeBean.setValidFrom(promoCode.getValidFrom());
-		promoCodeBean.setValidTo(promoCode.getValidFrom());
+		promoCodeBean.setValidTo(promoCode.getValidTo());
 		
 		promoCodeService.deletePromoCode(promoCodeBean.getCodeId());
 		
@@ -54,13 +58,15 @@ public class PromoCodeController {
 	}
 	
 	public String redirectNew() {
+		Date date = new Date();
+		
 		promoCodeBean.setCodeId(null);
 		promoCodeBean.setCode(null);
 		promoCodeBean.setDescription(null);
 		promoCodeBean.setDiscount(null);
 		promoCodeBean.setMultiple(null);
 		promoCodeBean.setUsed(null);
-		promoCodeBean.setValidFrom(null);
+		promoCodeBean.setValidFrom(date);
 		promoCodeBean.setValidTo(null);
 		
 		return "new?faces-redirect=true";
@@ -71,11 +77,11 @@ public class PromoCodeController {
 		promoCodeBean.setCodeId(promoCode.getCodeId());
 		promoCodeBean.setCode(promoCode.getCode());
 		promoCodeBean.setDescription(promoCode.getDescription());
-		promoCodeBean.setDiscount(promoCode.getDiscount());
+		promoCodeBean.setDiscount(promoCode.getDiscount().multiply(new BigDecimal("100")));
 		promoCodeBean.setMultiple(promoCode.getMultiple());
 		promoCodeBean.setUsed(promoCode.getUsed());
 		promoCodeBean.setValidFrom(promoCode.getValidFrom());
-		promoCodeBean.setValidTo(promoCode.getValidFrom());
+		promoCodeBean.setValidTo(promoCode.getValidTo());
 
 
 		return "new?faces-redirect=true";
@@ -83,6 +89,13 @@ public class PromoCodeController {
 	
 	public void setPromoCodeBean(PromoCodeBean promoCodeBean) {
 		this.promoCodeBean = promoCodeBean;
+	}
+	
+	public String showUsed(Boolean usedForm) {
+		
+		promoCodeBean.setUsedForm(usedForm);
+		
+		return "index?faces-redirect=true";
 	}
 
 }

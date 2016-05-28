@@ -1,0 +1,62 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+		<div class="container col-md-12">
+			<h1>Taxes management</h1>
+                <h:form>
+                	<div class="btn-group">
+                		<h:commandButton value="Define new tax" action="#{taxController.redirectNew}" styleClass="btn btn-primary" />
+                	</div>
+                	<div class="btn-group">
+                		<h:commandButton value="Show old taxes" action="#{taxController.showOld(true)}" styleClass="btn btn-info" 
+                			rendered="#{taxBean.oldForm == false || taxBean.oldForm == null}" />
+                		#{' '}
+                		<h:commandButton value="Hide old taxes" action="#{taxController.showOld(false)}" styleClass="btn btn-warning" 
+                			rendered="#{taxBean.oldForm == true}" />
+                	</div>
+                	</h:form>
+				<div class="form-group col-md-12">				
+					<div class="table-responsive">
+						<h:form id="taxesForm">
+							<h:dataTable value="#{taxBean.listTaxes(taxBean.oldForm)}"
+								 var="item" styleClass="table table-striped">
+								 <h:column>
+								 	<f:facet name="header">Tax value</f:facet>
+								 	<h:outputText value="#{item.value}">
+								 		<f:convertNumber type="percent"/>
+								 	</h:outputText>
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Description</f:facet>
+								 	#{item.description}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Valid from</f:facet>
+								 	#{item.validFrom}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header">Valid to</f:facet>
+								 	#{item.validTo}
+								 </h:column>
+								 <h:column>
+								 	<f:facet name="header"></f:facet>
+								 	<div class="btn-group">
+				                		<h:commandButton value="Edit" action="#{taxController.redirectEdit(item)}" styleClass="btn btn-primary" />
+				                	</div>
+				                	#{" "}
+								 	<div class="btn-group">
+				                		<h:commandButton value="Delete" action="#{taxController.deletePlane(item)}" styleClass="btn btn-danger" rendered="#{userBean.level == 2}"/>
+				                	</div>
+								 </h:column>
+							</h:dataTable>
+						</h:form>
+					</div>
+					
+				</div>
+			
+		</div>
+    </ui:define>
+</ui:composition>
