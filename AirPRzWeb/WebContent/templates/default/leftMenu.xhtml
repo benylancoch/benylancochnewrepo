@@ -1,22 +1,89 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
-
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  >
+	
+	<ul class="nav nav-sidebar">
+		<h:form class="container col-md-12" id="searchForm">
+			<h1>Flights</h1>
+			
+			<div class="btn-group">
+          		<h:commandButton value="Change to One way only" action="#{searchBean.changeOneWay}" styleClass="btn btn-primary" rendered="#{searchBean.oneWay == false}">
+          			<f:ajax execute="@form" render="searchForm" />
+          		</h:commandButton>
+          		<h:commandButton value="Change to With return" action="#{searchBean.changeOneWay}" styleClass="btn btn-info" rendered="#{searchBean.oneWay == true}">
+          			<f:ajax execute="@form" render="searchForm" />
+          		</h:commandButton>
+          		<br/>
+            </div>
+                	
+			<div class="form-group">
+				<h:outputText value="From *: " styleClass="control-label" />
+	
+				<h:selectOneMenu id="departurePlace" value="#{searchBean.departurePlace}" styleClass="form-control" >
+				   	<f:selectItems value="#{flightBean.listAirports}" var="departure" itemValue="#{departure.airportId}" itemLabel="#{departure.name}" />
+				</h:selectOneMenu>
+			</div>
+			
+			<div class="form-group">
+				<h:outputText value="To *: " styleClass="control-label" />
+	
+				<h:selectOneMenu id="arrivalPlace" value="#{searchBean.arrivalPlace}" styleClass="form-control" >
+				   	<f:selectItems value="#{flightBean.listAirports}" var="arrival" itemValue="#{arrival.airportId}" itemLabel="#{arrival.name}" />
+				</h:selectOneMenu>
+			</div>
+			
+			<div class="form-group">
+				<h:outputText value="Fly out (start date)*: " styleClass="control-label" />
+			
+				<h:inputText id="flyOutStart" label="Validation error" value="#{searchBean.flyOutDateStart}" styleClass="form-control" autocomplete="false" 
+					required="#{param['searchForm:SearchButton'] != null}" requiredMessage="Date field must not be empty" >
+					<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+				</h:inputText>
+				<h:message for="flyOutStart" style="color:red" /><br/>
+				
+				<h:outputText value="Fly out (end date)*: " styleClass="control-label" />
+				<h:inputText id="flyOutEnd" label="Validation error" value="#{searchBean.flyOutDateEnd}" styleClass="form-control" autocomplete="false" 
+					required="#{param['searchForm:SearchButton'] != null}" requiredMessage="Date field must not be empty" >
+					<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+				</h:inputText>
+				<h:message for="flyOutEnd" style="color:red" /><br/>
+			</div>
+			
+			<div class="form-group">
+				<h:outputText value="Fly back (start date)*: " styleClass="control-label" rendered="#{searchBean.oneWay == false}"/>
+			
+				<h:inputText id="flyBackStart" label="Validation error" value="#{searchBean.flyBackDateStart}" styleClass="form-control" autocomplete="false" 
+					rendered="#{searchBean.oneWay == false}">
+					<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+				</h:inputText>
+				<h:message for="flyBackStart" style="color:red" /><br/>
+				
+				<h:outputText value="Fly back (end date)*: " styleClass="control-label" rendered="#{searchBean.oneWay == false}"/>
+				<h:inputText id="flyBackEnd" label="Validation error" value="#{searchBean.flyBackDateStart}" styleClass="form-control" autocomplete="false" 
+					rendered="#{searchBean.oneWay == false}">
+					<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+				</h:inputText>
+				<h:message for="flyBackEnd" style="color:red" />
+			</div>
+			
+			<div class="form-group">
+				<h:outputText value="Maximum number of transfers *: " styleClass="control-label" />
+	
+				<h:selectOneMenu id="noOfTransfers" value="#{searchBean.noOfTransfers}" styleClass="form-control" >
+				   	<f:selectItem itemValue="0" itemLabel="None" />
+				   	<f:selectItem itemValue="1" itemLabel="Up to 1 transfer" />
+				</h:selectOneMenu>
+			</div>
+			
+			<h:commandButton id="SearchButton" value="Search!" action="#{searchController.search}" styleClass="btn btn-primary" />
+			
+		</h:form>
+	</ul>
     <ul class="nav nav-sidebar">
         <li class="active"><a href="#">Overview</a></li>
         <li><a href="#">Reports</a></li>
         <li><a href="#">Analytics</a></li>
         <li><a href="#">Export</a></li>
-    </ul>
-    <ul class="nav nav-sidebar">
-        <li><a href="">Nav item</a></li>
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
-        <li><a href="">More navigation</a></li>
-    </ul>
-    <ul class="nav nav-sidebar">
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
-    </ul>        
+    </ul>       
 </ui:composition>

@@ -1,0 +1,85 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+		<div class="container col-md-12">
+			<h1>Test</h1>
+			
+			<h:form>				
+				<div class="table-responsive">
+					<h:dataTable rowIndexVar="row" value="#{searchController.listSearchResults()}"
+						 var="item" styleClass="table table-striped">
+						 <h:column>
+						 	<f:facet name="header">Result Id</f:facet>
+						 	<h:outputText value="#{row + 1}" />
+						 </h:column>
+						 
+						 
+						 <h:column>
+						 	<h:dataTable value="#{item}"
+							 var="subitem" styleClass="table table-striped">
+								 <h:column>
+								 	<f:facet name="header">Flight No</f:facet>
+								 	#{subitem.flightNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Departure date</f:facet>
+								 	#{subitem.starts}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Departure date</f:facet>
+								 	#{subitem.ends}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">EST flight time</f:facet>
+								 	<h:outputText value="#{searchController.estTime(subitem.starts, subitem.ends)}">
+								 	<f:convertDateTime pattern="HH 'hours' mm 'minutes'" type="time" />
+								 	</h:outputText>
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Available seats</f:facet>
+								 	#{subitem.planeNo.seats}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Tickets available</f:facet>
+								 	<div class="btn-group">
+				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-xs" />
+				                	</div>
+								 	<h:outputText value="#{' Economy Class: '}"/>
+								 	<h:outputText value="#{searchController.economyPrice(subitem)}">
+								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
+								 	</h:outputText><br/><br/>
+								 	
+								 	<div class="btn-group">
+				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-xs" rendered="#{subitem.planeNo.classes >= 2}"/>
+				                	</div>
+								 	<h:outputText value="#{' Business Class: '}" rendered="#{subitem.planeNo.classes >= 2}" />
+								 	<h:outputText value="#{searchController.businessPrice(subitem)}" rendered="#{subitem.planeNo.classes >= 2}">
+								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
+								 	</h:outputText><br/><br/>
+								 	
+								 	<div class="btn-group">
+				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-xs" rendered="#{subitem.planeNo.classes >= 3}"/>
+				                	</div>
+								 	<h:outputText value="#{' First Class: '}" rendered="#{subitem.planeNo.classes >= 3}" />
+								 	<h:outputText value="#{searchController.firstClassPrice(subitem)}" rendered="#{subitem.planeNo.classes >= 3}">
+								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
+								 	</h:outputText>
+								 </h:column>
+								 
+								 </h:dataTable>
+						 </h:column>
+					</h:dataTable>
+					</div>
+			</h:form>
+			
+		</div>
+    </ui:define>
+</ui:composition>

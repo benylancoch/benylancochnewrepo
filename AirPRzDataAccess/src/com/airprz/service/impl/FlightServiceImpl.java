@@ -26,13 +26,13 @@ public class FlightServiceImpl implements FlightService {
 	}
 	
 	@Override
-	public List<List<Flight>> searchForFlights(Date starts,
+	public List<List<Flight>> searchForFlights(Date starts, Date ends,
 			Long departurePlace, Long arrivalPlace, int noOfTransfers) {
 		java.util.Date currentDate = new java.util.Date();
 		
-		if(starts.after(currentDate)) {
+		if(starts.before(currentDate)) {
 			
-			return flightDao.searchForFlights(new Timestamp(starts.getTime()), departurePlace, arrivalPlace, noOfTransfers);
+			return flightDao.searchForFlights(new Timestamp(starts.getTime()), new Timestamp(ends.getTime()), departurePlace, arrivalPlace, noOfTransfers);
 		}
 		else {
 			
@@ -40,6 +40,7 @@ public class FlightServiceImpl implements FlightService {
 		}
 		
 	}
+	
 	
 	@Override
 	public List<Flight> getFlightsByDate(Date starts, Date ends) {

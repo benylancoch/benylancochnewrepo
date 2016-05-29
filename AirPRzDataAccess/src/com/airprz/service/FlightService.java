@@ -10,7 +10,7 @@ public interface FlightService {
 	
 	public Flight getFlight(Long flightId);
 	
-	public List<List<Flight>> searchForFlights(Date starts, Long departurePlace, Long arrivalPlace, int noOfTransfers);
+	public List<List<Flight>> searchForFlights(Date starts, Date ends, Long departurePlace, Long arrivalPlace, int noOfTransfers);
 	
 	public List<Flight> getFlightsByDate(Date starts, Date ends);
 	

@@ -9,7 +9,7 @@ public interface FlightDao {
 	
 	public Flight getFlight(Long flightId);
 	
-	public List<List<Flight>> searchForFlights(Timestamp starts, Long departurePlace, Long arrivalPlace, int noOfTransfers);
+	public List<List<Flight>> searchForFlights(Timestamp starts, Timestamp ends, Long departurePlace, Long arrivalPlace, int noOfTransfers);
 	
 	public List<Flight> getFlightsByTimestamp(Timestamp starts, Timestamp ends);
 	

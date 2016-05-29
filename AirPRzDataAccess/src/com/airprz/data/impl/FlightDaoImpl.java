@@ -72,7 +72,7 @@ public class FlightDaoImpl implements FlightDao {
 	}
 	
 	@Override
-	public List<List<Flight>> searchForFlights(Timestamp starts,
+	public List<List<Flight>> searchForFlights(Timestamp starts, Timestamp ends,
 			Long departurePlace, Long arrivalPlace,
 			int noOfTransfers) {
 		Connection connection = null;
@@ -90,17 +90,23 @@ public class FlightDaoImpl implements FlightDao {
 		try {
 			connection = DbConnector.getConnection();
 			stmt = connection.prepareStatement(
-					"SELECT F.FLIGHT_ID, F.FLIGHT_NO, F.STARTS, F.ENDS, F.BASE_PRICE, F.DEPARTURE_PLACE, F.ARRIVAL_PLACE, F.PLANE_NO "
+					"SELECT F.FLIGHT_ID, F.FLIGHT_NO, F.STARTS, F.ENDS, F.BASE_PRICE, F.DEPARTURE_PLACE, F.ARRIVAL_PLACE, F.PLANE_NO, "
+					+ "P.MANUFACTURER, P.MODEL, P.CLASSES, P.SEATS "
 					+ "FROM BAZA.FLIGHTS F "
+					+ "INNER JOIN BAZA.PLANES P "
+					+ "ON F.PLANE_NO = P.PLANE_NO "
 					+ "WHERE (F.STARTS BETWEEN ? AND ?) AND F.DEPARTURE_PLACE = ? AND F.ARRIVAL_PLACE = ?");
 			
-			stmt.setTimestamp(1, new Timestamp(starts.getTime() - 86400000));
-			stmt.setTimestamp(2, new Timestamp(starts.getTime() + 86400000));
+			//stmt.setTimestamp(1, new Timestamp(starts.getTime() - 86400000));
+			//stmt.setTimestamp(2, new Timestamp(starts.getTime() + 86400000));
+			stmt.setTimestamp(1, starts);
+			stmt.setTimestamp(2, ends);
 			stmt.setLong(3, departurePlace);
 			stmt.setLong(4, arrivalPlace);
 			
 			rs = stmt.executeQuery();
 			while (rs.next()) {
+				flights = new ArrayList<Flight>();
 				plane = new Plane();
 				departurePlaceObject = new Airport();
 				arrivalPlaceObject = new Airport();
@@ -114,25 +120,29 @@ public class FlightDaoImpl implements FlightDao {
 				departurePlaceObject.setAirportId(rs.getLong("DEPARTURE_PLACE"));
 				arrivalPlaceObject.setAirportId(rs.getLong("ARRIVAL_PLACE"));
 				plane.setPlaneId(rs.getString("PLANE_NO"));
+				plane.setManufacturer(rs.getString("MANUFACTURER"));
+				plane.setModel(rs.getString("MODEL"));
+				plane.setClasses(rs.getLong("CLASSES"));
+				plane.setSeats(rs.getLong("SEATS"));
 				
 				flight.setDeparturePlace(departurePlaceObject);
 				flight.setArrivalPlace(arrivalPlaceObject);
 				flight.setPlaneNo(plane);
 				flights.add(flight);
+				flightsFlights.add(flights);
 			}
 			
 			//Check if there is more no of transfers
-			
-			if( noOfTransfers == 0 ) {
-				
-				flightsFlights.add(flights);
-				
-			}
-			else {
-				
-				//TO DO!!!!!!!!!!!!!!!!!!!!
-				
-			}
+//			if( noOfTransfers == 0 ) {
+//				
+//				flightsFlights.add(flights);
+//				
+//			}
+//			else {
+//				
+//				//TO DO!!!!!!!!!!!!!!!!!!!!
+//				
+//			}
 			
 			rs.close();
 			stmt.close();
