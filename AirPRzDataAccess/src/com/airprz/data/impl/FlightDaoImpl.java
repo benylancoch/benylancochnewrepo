@@ -91,11 +91,18 @@ public class FlightDaoImpl implements FlightDao {
 			connection = DbConnector.getConnection();
 			stmt = connection.prepareStatement(
 					"SELECT F.FLIGHT_ID, F.FLIGHT_NO, F.STARTS, F.ENDS, F.BASE_PRICE, F.DEPARTURE_PLACE, F.ARRIVAL_PLACE, F.PLANE_NO, "
-					+ "P.MANUFACTURER, P.MODEL, P.CLASSES, P.SEATS "
+					+ "P.MANUFACTURER, P.MODEL, P.CLASSES, P.SEATS, "
+					+ "DP.AIRPORT_ID, DP.NAME AS DNAME, DP.CITY AS DCITY, DP.COUNTRY AS DCOUNTRY, DP.ADDRESS AS DADDRESS, DP.LOCATION AS DLOCATION, "
+					+ "AP.AIRPORT_ID, AP.NAME AS ANAME, AP.CITY AS ACITY, AP.COUNTRY AS ACOUNTRY, AP.ADDRESS AS AADDRESS, AP.LOCATION AS ALOCATION "
 					+ "FROM BAZA.FLIGHTS F "
 					+ "INNER JOIN BAZA.PLANES P "
 					+ "ON F.PLANE_NO = P.PLANE_NO "
-					+ "WHERE (F.STARTS BETWEEN ? AND ?) AND F.DEPARTURE_PLACE = ? AND F.ARRIVAL_PLACE = ?");
+					+ "INNER JOIN BAZA.AIRPORTS DP "
+					+ "ON F.DEPARTURE_PLACE = DP.AIRPORT_ID "
+					+ "LEFT JOIN BAZA.AIRPORTS AP "
+					+ "ON F.ARRIVAL_PLACE = AP.AIRPORT_ID "
+					+ "WHERE (F.STARTS BETWEEN ? AND ?) AND F.DEPARTURE_PLACE = ? AND F.ARRIVAL_PLACE = ? "
+					+ "ORDER BY F.STARTS ASC, F.FLIGHT_NO ASC");
 			
 			//stmt.setTimestamp(1, new Timestamp(starts.getTime() - 86400000));
 			//stmt.setTimestamp(2, new Timestamp(starts.getTime() + 86400000));
@@ -117,8 +124,24 @@ public class FlightDaoImpl implements FlightDao {
 				flight.setStarts(rs.getTimestamp("STARTS"));
 				flight.setEnds(rs.getTimestamp("ENDS"));
 				flight.setBasePrice(rs.getBigDecimal("BASE_PRICE"));
+				
+				//-------------------departure--place-------------------------
 				departurePlaceObject.setAirportId(rs.getLong("DEPARTURE_PLACE"));
+				departurePlaceObject.setName(rs.getString("DNAME"));
+				departurePlaceObject.setCity(rs.getString("DCITY"));
+				departurePlaceObject.setCountry(rs.getString("DCOUNTRY"));
+				departurePlaceObject.setAddress(rs.getString("DADDRESS"));
+				departurePlaceObject.setLocation(rs.getString("DLOCATION"));
+				
+				//------------------Arrival--place------------------------
 				arrivalPlaceObject.setAirportId(rs.getLong("ARRIVAL_PLACE"));
+				arrivalPlaceObject.setName(rs.getString("ANAME"));
+				arrivalPlaceObject.setCity(rs.getString("ACITY"));
+				arrivalPlaceObject.setCountry(rs.getString("ACOUNTRY"));
+				arrivalPlaceObject.setAddress(rs.getString("AADDRESS"));
+				arrivalPlaceObject.setLocation(rs.getString("ALOCATION"));
+				
+				//------------------PLANE------------------------
 				plane.setPlaneId(rs.getString("PLANE_NO"));
 				plane.setManufacturer(rs.getString("MANUFACTURER"));
 				plane.setModel(rs.getString("MODEL"));
@@ -175,7 +198,8 @@ public class FlightDaoImpl implements FlightDao {
 			stmt = connection.prepareStatement(
 					"SELECT F.FLIGHT_ID, F.FLIGHT_NO, F.STARTS, F.ENDS, F.BASE_PRICE, F.DEPARTURE_PLACE, F.ARRIVAL_PLACE, F.PLANE_NO "
 					+ "FROM BAZA.FLIGHTS F "
-					+ "WHERE F.STARTS BETWEEN ? AND ?");
+					+ "WHERE F.STARTS BETWEEN ? AND ? "
+					+ "ORDER BY F.STARTS ASC, F.FLIGHT_NO ASC");
 			
 			stmt.setTimestamp(1, starts);
 			stmt.setTimestamp(2, ends);

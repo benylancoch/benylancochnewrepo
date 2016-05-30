@@ -2,6 +2,7 @@ package com.airprz.service.impl;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,14 +30,18 @@ public class FlightServiceImpl implements FlightService {
 	public List<List<Flight>> searchForFlights(Date starts, Date ends,
 			Long departurePlace, Long arrivalPlace, int noOfTransfers) {
 		java.util.Date currentDate = new java.util.Date();
+		Calendar date1dayback = Calendar.getInstance();
+		date1dayback.add(Calendar.DAY_OF_WEEK, -1);
 		
-		if(starts.before(currentDate)) {
+		currentDate = date1dayback.getTime();
+		
+		if(starts.after(currentDate)) {
 			
 			return flightDao.searchForFlights(new Timestamp(starts.getTime()), new Timestamp(ends.getTime()), departurePlace, arrivalPlace, noOfTransfers);
 		}
 		else {
 			
-			return null;
+			return flightDao.searchForFlights(new Timestamp(new Date().getTime()), new Timestamp(ends.getTime()), departurePlace, arrivalPlace, noOfTransfers);
 		}
 		
 	}

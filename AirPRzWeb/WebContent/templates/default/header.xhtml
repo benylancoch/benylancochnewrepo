@@ -16,6 +16,9 @@
             <h:form>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                		<li><h:link value=" (#{basketBean.getBasketItemsCount()})" outcome="/views/basket/index?faces-redirect=true" rendered="true" >
+                			<i class="fa fa-shopping-cart" ></i>
+                		</h:link></li>
                	    <li><h:link value="Users" outcome="/views/users/index?faces-redirect=true" rendered="#{userBean.level == 2}"/></li>
                 	<li><h:link value="Transactions" outcome="/views/transactions/index?faces-redirect=true" rendered="#{userBean.level == 2}"/></li>
                     <li><h:link value="Flights management" outcome="/views/flight/management?faces-redirect=true" rendered="#{userBean.level == 2}"/></li>

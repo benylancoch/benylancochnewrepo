@@ -27,12 +27,22 @@
 								 
 								 <h:column>
 								 	<f:facet name="header">Departure date</f:facet>
-								 	#{subitem.starts}
+								 	<h:outputText value="#{subitem.starts}">
+								 		<f:convertDateTime pattern="yyyy-MM-dd HH:mm" type="both" />
+								 	</h:outputText>
 								 </h:column>
 								 
 								 <h:column>
 								 	<f:facet name="header">Departure date</f:facet>
-								 	#{subitem.ends}
+								 	<h:outputText value="#{subitem.ends}">
+								 		<f:convertDateTime pattern="yyyy-MM-dd HH:mm" type="both" />
+								 	</h:outputText>
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Flight</f:facet>
+								 	#{"From "} #{subitem.departurePlace.name}<br/>
+								 	#{"to "} #{subitem.arrivalPlace.name}
 								 </h:column>
 								 
 								 <h:column>
@@ -49,24 +59,46 @@
 								 
 								 <h:column>
 								 	<f:facet name="header">Tickets available</f:facet>
-								 	<div class="btn-group">
-				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-xs" />
-				                	</div>
+								 	
 								 	<h:outputText value="#{' Economy Class: '}"/>
 								 	<h:outputText value="#{searchController.economyPrice(subitem)}">
 								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
-								 	</h:outputText><br/><br/>
+								 	</h:outputText><br/>
+								 	
+								 	<div class="row">
+									 	<div class="col-lg-6">
+										    <div class="input-group">
+										    	<span class="input-group-btn">
+					                				<h:commandButton value=" - " action="#" styleClass="btn btn-primary btn-sm"/>
+					                			</span>
+						                		<h:inputText value="" styleClass="form-control input-sm"></h:inputText>
+						                		<span class="input-group-btn">
+						                			<h:commandButton value="+" action="#" styleClass="btn btn-primary btn-sm"/>
+						                		</span>
+						                		<span class="input-group-btn">
+						                			#{"    "}
+						                		</span>
+						                		<span class="input-group-btn">
+						                			<h:commandButton value="Buy" action="#" styleClass="btn btn-success btn-sm" />
+						                		</span>
+						                	</div>
+				                		</div>
+				                	</div>
+				                	
+				                	<br/>
 								 	
 								 	<div class="btn-group">
-				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-xs" rendered="#{subitem.planeNo.classes >= 2}"/>
+				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-sm" rendered="#{subitem.planeNo.classes >= 2}"/>
 				                	</div>
+				                	
+				                	
 								 	<h:outputText value="#{' Business Class: '}" rendered="#{subitem.planeNo.classes >= 2}" />
 								 	<h:outputText value="#{searchController.businessPrice(subitem)}" rendered="#{subitem.planeNo.classes >= 2}">
 								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
 								 	</h:outputText><br/><br/>
 								 	
 								 	<div class="btn-group">
-				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-xs" rendered="#{subitem.planeNo.classes >= 3}"/>
+				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-sm" rendered="#{subitem.planeNo.classes >= 3}"/>
 				                	</div>
 								 	<h:outputText value="#{' First Class: '}" rendered="#{subitem.planeNo.classes >= 3}" />
 								 	<h:outputText value="#{searchController.firstClassPrice(subitem)}" rendered="#{subitem.planeNo.classes >= 3}">

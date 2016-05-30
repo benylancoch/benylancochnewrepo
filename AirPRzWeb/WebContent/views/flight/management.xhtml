@@ -8,7 +8,7 @@
 			<h1>Flights management</h1>
                 <h:form>
                 	<div class="btn-group">
-                		<h:commandButton value="Add new flight" action="new" styleClass="btn btn-primary" />
+                		<h:commandButton value="Add new flight" action="#{flightController.redirectNew}" styleClass="btn btn-primary" />
                 		<h:commandButton value="Planes" action="/views/planes/index?faces-redirect=true" styleClass="btn btn-info" />
                 		<h:commandButton value="Airports" action="/views/airports/index?faces-redirect=true" styleClass="btn btn-info" />
                 		<h:commandButton value="Promo codes" action="/views/promoCodes/index?faces-redirect=true" styleClass="btn btn-info" />
@@ -21,12 +21,12 @@
 						<h:outputText value="Date : " styleClass="control-label" />
 			
 						<h:inputText id="validFrom" label="Validation error" value="#{flightSearchBean.startDate}" styleClass="form-control" autocomplete="false" >
-							<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+							<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
 						</h:inputText>
 						
 						#{" - "}
 						<h:inputText id="validTo" label="Validation error" value="#{flightSearchBean.endDate}" styleClass="form-control" autocomplete="false" >
-							<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
+							<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
 						</h:inputText>
 						
 						<div class="btn-group">
