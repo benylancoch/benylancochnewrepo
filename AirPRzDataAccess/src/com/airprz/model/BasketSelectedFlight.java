@@ -10,6 +10,9 @@ public class BasketSelectedFlight {
 	private BigDecimal classPrice;
 	private Long noOfTickets;
 	
+	public BasketSelectedFlight() {
+		classPrice = new BigDecimal("0.0");
+	}
 	public List<Flight> getSelectedFlight() {
 		return selectedFlight;
 	}
@@ -33,6 +36,23 @@ public class BasketSelectedFlight {
 	}
 	public void setNoOfTickets(Long noOfTickets) {
 		this.noOfTickets = noOfTickets;
+	}
+	
+	public void addTicket(Long noOfTicketsToAdd) {
+		
+		this.noOfTickets += noOfTicketsToAdd;
+	}
+	
+	public Boolean subTicket(Long noOfTicketsToSub) {
+		
+		if(noOfTicketsToSub <= this.noOfTickets) {
+			this.noOfTickets -= noOfTicketsToSub;
+		}
+		else {
+			return false;
+		}
+		
+		return true;
 	}
 	
 }

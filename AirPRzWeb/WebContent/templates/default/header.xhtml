@@ -13,7 +13,7 @@
                 </button>
                 <a class="navbar-brand" href="#{request.contextPath}/index.xhtml">AirPRz</a>
             </div>
-            <h:form>
+            <h:form id="headerForm">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                 		<li><h:link value=" (#{basketBean.getBasketItemsCount()})" outcome="/views/basket/index?faces-redirect=true" rendered="true" >

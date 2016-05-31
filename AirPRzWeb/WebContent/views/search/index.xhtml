@@ -6,7 +6,6 @@
     <ui:define name="content">  
 		<div class="container col-md-12">
 			<h1>Test</h1>
-			
 			<h:form>				
 				<div class="table-responsive">
 					<h:dataTable rowIndexVar="row" value="#{searchController.listSearchResults()}"
@@ -60,35 +59,24 @@
 								 <h:column>
 								 	<f:facet name="header">Tickets available</f:facet>
 								 	
+								 	<div class="btn-group">
+				                		<h:commandButton value="Add to basket" action="#{basketController.addToBasket(item, 'ECONOMY')}" styleClass="btn btn-success btn-xs">
+				                			<f:ajax execute="@form" render="headerForm" />
+				                		</h:commandButton>
+				                	</div>
 								 	<h:outputText value="#{' Economy Class: '}"/>
 								 	<h:outputText value="#{searchController.economyPrice(subitem)}">
 								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
 								 	</h:outputText><br/>
 								 	
-								 	<div class="row">
-									 	<div class="col-lg-6">
-										    <div class="input-group">
-										    	<span class="input-group-btn">
-					                				<h:commandButton value=" - " action="#" styleClass="btn btn-primary btn-sm"/>
-					                			</span>
-						                		<h:inputText value="" styleClass="form-control input-sm"></h:inputText>
-						                		<span class="input-group-btn">
-						                			<h:commandButton value="+" action="#" styleClass="btn btn-primary btn-sm"/>
-						                		</span>
-						                		<span class="input-group-btn">
-						                			#{"    "}
-						                		</span>
-						                		<span class="input-group-btn">
-						                			<h:commandButton value="Buy" action="#" styleClass="btn btn-success btn-sm" />
-						                		</span>
-						                	</div>
-				                		</div>
-				                	</div>
 				                	
 				                	<br/>
 								 	
 								 	<div class="btn-group">
-				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-sm" rendered="#{subitem.planeNo.classes >= 2}"/>
+				                		<h:commandButton value="Add to basket" action="#{basketController.addToBasket(item, 'BUSINESS')}" styleClass="btn btn-success btn-xs" 
+				                			rendered="#{subitem.planeNo.classes >= 2}">
+				                			<f:ajax execute="@form" render="headerForm" />
+				                		</h:commandButton>
 				                	</div>
 				                	
 				                	
@@ -97,8 +85,13 @@
 								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
 								 	</h:outputText><br/><br/>
 								 	
+								 	
+								 	
 								 	<div class="btn-group">
-				                		<h:commandButton value="Buy" action="#" styleClass="btn btn-primary btn-sm" rendered="#{subitem.planeNo.classes >= 3}"/>
+				                		<h:commandButton value="Add to basket" action="#{basketController.addToBasket(item, 'FIRSTCLASS')}" styleClass="btn btn-success btn-xs" 
+				                			rendered="#{subitem.planeNo.classes >= 3}">
+				                			<f:ajax execute="@form" render="headerForm" />
+				                		</h:commandButton>
 				                	</div>
 								 	<h:outputText value="#{' First Class: '}" rendered="#{subitem.planeNo.classes >= 3}" />
 								 	<h:outputText value="#{searchController.firstClassPrice(subitem)}" rendered="#{subitem.planeNo.classes >= 3}">

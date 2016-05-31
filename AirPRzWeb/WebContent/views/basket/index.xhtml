@@ -6,6 +6,47 @@
     <ui:define name="content">  
 		<div class="container col-md-12">
 			<h1>Basket</h1>
+			
+			<h:form>				
+				<div class="table-responsive">
+					<h:dataTable rowIndexVar="row" value="#{basketBean.basketFlights}"
+						 var="item" styleClass="table table-striped">
+						 <h:column>
+						 	<f:facet name="header">Result Id</f:facet>
+						 	<h:outputText value="#{row + 1}" />
+						 </h:column>
+						 
+						 
+						 <h:column>
+						 	<h:dataTable value="#{item}"
+							 var="subitem" styleClass="table table-striped">
+								 <h:column>
+								 	<f:facet name="header">No of Tickets</f:facet>
+								 	#{subitem.noOfTickets}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Seat class</f:facet>
+								 	#{subitem.classSelected}
+								 </h:column>
+								 
+								 <h:column>
+								 	<h:dataTable value="#{subitem.selectedFlight}"
+							 			var="flightItem" styleClass="table table-striped">
+									 <h:column>
+									 	<f:facet name="header">Flight No</f:facet>
+									 	#{flightItem.flightNo}
+									 </h:column>
+									 </h:dataTable>
+								 </h:column>
+								 
+								 
+								 
+							</h:dataTable>
+						 </h:column>
+					</h:dataTable>
+					</div>
+			</h:form>
 
 		</div>
     </ui:define>

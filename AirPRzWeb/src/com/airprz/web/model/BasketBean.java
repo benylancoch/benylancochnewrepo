@@ -56,5 +56,44 @@ public class BasketBean {
 		
 		return tmp;
 	}
+	
+	public void addFlightToBasket(BasketSelectedFlight flightToAdd) {
+		Boolean exist = false;
+		int index = -1;
+		
+		//Finds if that flight is already added to basket. If yes, index of that ticket is returned
+		//Checks seat class selected
+		for(int i=0; i<this.basketFlights.size(); i++) {
+			if (this.getBasketFlights().get(i).getClassSelected().equals(flightToAdd.getClassSelected())) {
+				for(int j=0; j<flightToAdd.getSelectedFlight().size(); j++) {
+					
+					if(this.basketFlights.get(i).getSelectedFlight().get(j).getFlightId() == flightToAdd.getSelectedFlight().get(j).getFlightId()) {
+						exist = true;
+						continue;
+					}
+					else {
+						exist = false;
+						break;
+					}
+				
+				}
+			}
+			else {
+				exist = false;
+			}
+			index = i;
+			if (exist) break;
+		}
+		
+		//Handle adding tickets
+		if (exist == false) {
+			
+			this.basketFlights.add(flightToAdd);
+		}
+		else {
+			
+			this.basketFlights.get(index).addTicket(flightToAdd.getNoOfTickets());
+		}
+	}
 
 }
