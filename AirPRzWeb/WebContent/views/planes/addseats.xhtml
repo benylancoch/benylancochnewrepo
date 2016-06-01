@@ -1,0 +1,49 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+    
+    	<div class="container col-md-6">
+    		<h1>Define seats for plane</h1>
+                <h:form>
+                <div class="form-group">
+					<h:outputText value="Choose seat class: " styleClass="control-label" />
+		
+					<h:selectOneMenu id="classF" value="#{referenceSeatsDefineBean.seatClass}" styleClass="form-control">
+						<f:selectItems value="#{planeController.listClasses(planeBean.classes)}" var="classes" itemValue="#{classes.classNo}" 
+					   		itemLabel="#{classes.classDescription}" />
+					</h:selectOneMenu>
+				</div>
+				
+				<div class="form-group">
+					<h:outputText value="First seat no: *" styleClass="control-label" />
+		
+					<h:inputText id="firstSeat" label="Validation error" value="#{referenceSeatsDefineBean.seatNoStart}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="First seat no field must not be empty" 
+						validatorMessage="Number provided must be integer and be between 0 and #{planeBean.seats}">
+							<f:convertNumber integerOnly="true" type="number" />
+							<f:validateLongRange minimum="0" maximum="#{planeBean.seats}" />
+					</h:inputText>
+					<h:message for="firstSeat" style="color:red" />
+				</div>
+                
+				<div class="form-group">
+					<h:outputText value="Last seat no: *" styleClass="control-label" />
+		
+					<h:inputText id="lastSeat" label="Validation error" value="#{referenceSeatsDefineBean.seatNoEnd}" styleClass="form-control" autocomplete="false" 
+						required="true" requiredMessage="Last seat no field must not be empty" 
+						validatorMessage="Number provided must be integer and be between 0 and #{planeBean.seats}">
+							<f:convertNumber integerOnly="true" type="number" />
+							<f:validateLongRange minimum="0" maximum="#{planeBean.seats}" />
+					</h:inputText>
+					<h:message for="lastSeat" style="color:red" />
+				</div>
+				
+				<h:commandButton value="Submit" action="#{planeController.saveSeats}" styleClass="btn btn-primary" />
+				#{' '}<h:link value="Cancel" outcome="index?faces-redirect=true" styleClass="btn btn-danger" />
+			</h:form>
+		</div>
+</ui:define>
+</ui:composition>

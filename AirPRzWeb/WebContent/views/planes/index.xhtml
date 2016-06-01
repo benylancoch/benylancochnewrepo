@@ -42,6 +42,10 @@
 				                		<h:commandButton value="Edit" action="#{planeController.redirectEdit(item)}" styleClass="btn btn-primary" />
 				                	</div>
 				                	#{" "}
+				                	<div class="btn-group">
+				                		<h:commandButton value="Define seats" action="#{planeController.redirectDefineSeats(item)}" styleClass="btn btn-warning" />
+				                	</div>
+				                	#{" "}
 								 	<div class="btn-group">
 				                		<h:commandButton value="Delete" action="#{planeController.deletePlane(item)}" styleClass="btn btn-danger" rendered="#{userBean.level == 2}"/>
 				                	</div>

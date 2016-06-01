@@ -1,26 +1,25 @@
 package com.airprz.model;
 
-public class FlightSeat {
+public class ReferenceSeat {
 	
-	private Long fsId;
-	private Long fsClass;
+	private Long rsId;
+	private Long rsClass;
 	private Long seatNo;
 	private String free;
 	private String whereLoc;
 	private Plane plane;
-	private Flight flight;
 	
-	public Long getFsId() {
-		return fsId;
+	public Long getRsId() {
+		return rsId;
 	}
-	public void setFsId(Long fsId) {
-		this.fsId = fsId;
+	public void setRsId(Long rsId) {
+		this.rsId = rsId;
 	}
-	public Long getFsClass() {
-		return fsClass;
+	public Long getRsClass() {
+		return rsClass;
 	}
-	public void setFsClass(Long fsClass) {
-		this.fsClass = fsClass;
+	public void setRsClass(Long rsClass) {
+		this.rsClass = rsClass;
 	}
 	public Long getSeatNo() {
 		return seatNo;
@@ -43,14 +42,8 @@ public class FlightSeat {
 	public Plane getPlane() {
 		return plane;
 	}
-	public void setPlane(Plane planeNo) {
-		this.plane = planeNo;
-	}
-	public Flight getFlight() {
-		return flight;
-	}
-	public void setFlight(Flight flightId) {
-		this.flight = flightId;
+	public void setPlane(Plane plane) {
+		this.plane = plane;
 	}
 
 }

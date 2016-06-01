@@ -81,8 +81,18 @@ public class DataSourceSetupUtil {
 				+"WHERE_LOC VARCHAR(10) NOT NULL, "
 				+"PLANE_NO VARCHAR(10) NOT NULL, "
 				+"FLIGHT_ID INTEGER NOT NULL)");
-
 		//----------------FLIGHTS_SEATS-------------------------------------------
+		
+		//----------------REFERENCE_SEATS-------------------------------------------
+				stmt.executeUpdate("CREATE TABLE BAZA.REFERENCE_SEATS ("
+						+"RS_ID INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY , "
+						+"CLASS INTEGER NOT NULL, "
+						+"SEAT_NO INTEGER NOT NULL, "
+						+"FREE VARCHAR(1) NOT NULL, "
+						+"WHERE_LOC VARCHAR(10) NOT NULL, "
+						+"PLANE_NO VARCHAR(10) NOT NULL)");
+
+		//----------------REFERENCE_SEATS-------------------------------------------
 
 		//----------------PLANES-------------------------------------------
 		stmt.executeUpdate("CREATE TABLE BAZA.PLANES ("
@@ -179,6 +189,9 @@ public class DataSourceSetupUtil {
 				+"(FLIGHT_ID) REFERENCES BAZA.FLIGHTS (FLIGHT_ID) ON DELETE CASCADE");
 		
 		stmt.executeUpdate("ALTER TABLE BAZA.FLIGHTS_SEATS ADD CONSTRAINT flights_seats_planes_FK FOREIGN KEY"
+				+"(PLANE_NO) REFERENCES BAZA.PLANES (PLANE_NO) ON DELETE CASCADE");
+		
+		stmt.executeUpdate("ALTER TABLE BAZA.REFERENCE_SEATS ADD CONSTRAINT reference_seats_planes_FK FOREIGN KEY"
 				+"(PLANE_NO) REFERENCES BAZA.PLANES (PLANE_NO) ON DELETE CASCADE");
 		
 		stmt.executeUpdate("ALTER TABLE BAZA.TICKETS ADD CONSTRAINT TICKETS_TICKETS_FK FOREIGN KEY"
