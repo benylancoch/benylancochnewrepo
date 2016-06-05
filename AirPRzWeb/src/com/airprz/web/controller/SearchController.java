@@ -28,13 +28,24 @@ public class SearchController {
 	}
 	
 	public String search() {
-		
-		return "/views/search/index?faces-redirect=true";
+		if (searchBean.getOneWay()) {
+			return "/views/search/index?faces-redirect=true";
+		}
+		else {
+			return "/views/search/indextwoway?faces-redirect=true";
+		}
 	}
 	
 	public List<List<Flight>> listSearchResults() {
 		
 		return flightService.searchForFlights(searchBean.getFlyOutDateStart(), searchBean.getFlyOutDateEnd(), 
+				searchBean.getDeparturePlace(), searchBean.getArrivalPlace(), searchBean.getNoOfTransfers());
+
+	}
+	
+	public List<List<Flight>> listBackSearchResults() {
+		
+		return flightService.searchForFlights(searchBean.getFlyBackDateStart(), searchBean.getFlyBackDateEnd(), 
 				searchBean.getDeparturePlace(), searchBean.getArrivalPlace(), searchBean.getNoOfTransfers());
 
 	}

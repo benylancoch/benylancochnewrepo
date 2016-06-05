@@ -30,6 +30,12 @@ public class PromoCodeServiceImpl implements PromoCodeService {
 	}
 	
 	@Override
+	public PromoCode searchForPromoCode(String promoCode) {
+		
+		return promoCodeDao.searchForPromoCode(promoCode);
+	}
+	
+	@Override
 	public List<PromoCode> getPromoCodes(boolean valid) {
 		return promoCodeDao.getPromoCodes(valid);
 	}

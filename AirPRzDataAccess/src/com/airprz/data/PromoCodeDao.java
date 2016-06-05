@@ -8,6 +8,8 @@ public interface PromoCodeDao {
 	
 	PromoCode getPromoCode(Long codeId);
 	
+	PromoCode searchForPromoCode(String promoCode);
+	
 	List<PromoCode> getPromoCodes(boolean valid);
 	
 	PromoCode savePromoCode(PromoCode promoCode);

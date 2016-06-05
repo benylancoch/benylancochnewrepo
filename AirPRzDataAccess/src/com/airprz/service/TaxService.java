@@ -10,6 +10,8 @@ public interface TaxService {
 	
 	Tax getTax(Long taxId);
 	
+	Tax getCurrentTax();
+	
 	List<Tax> getTaxes(boolean oldTaxes);
 	
 	Tax addTax(BigDecimal value, String description, Date validFrom, Date validTo);

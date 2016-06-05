@@ -139,6 +139,42 @@ public class UserServiceImpl implements UserService {
 		
 		return user;
 	}
+	
+	@Override
+	public User updateUserNoPassword(Long userId, String email, String firstname, String lastname, Long honorific, String phone, String name3rd, String phone3rd) {
+		User user = userDao.getUser(userId);
+		if (user != null) {
+			user = new User();
+			user.setId(userId);
+			user.setEmail(email);
+			user.setFirstname(firstname);
+			user.setLastname(lastname);
+			user.setHonorific(honorific);
+			user.setPhone(phone);
+			user = userDao.saveUserNoPassword(user);
+		}
+		else {
+			user = null;
+		}
+		
+		return user;
+	}
+	
+	@Override
+	public User changePassword(Long userId, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		User user = userDao.getUser(userId);
+		if (user != null) {
+			user = new User();
+			user.setId(userId);
+			user.setPassword(password);
+			user = userDao.saveUserPasswordOnly(user);
+		}
+		else {
+			user = null;
+		}
+		
+		return user;
+	}
 
 	@Override
 	public void deleteUser(Long userId) {

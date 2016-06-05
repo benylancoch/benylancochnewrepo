@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.airprz.data.FlightDao;
+import com.airprz.data.ReferenceSeatDao;
 import com.airprz.data.impl.FlightDaoImpl;
+import com.airprz.data.impl.ReferenceSeatDaoImpl;
 import com.airprz.model.Airport;
 import com.airprz.model.Flight;
 import com.airprz.model.Plane;
@@ -16,9 +18,11 @@ import com.airprz.service.FlightService;
 public class FlightServiceImpl implements FlightService {
 	
 	private final FlightDao flightDao;
+	private final ReferenceSeatDao referenceSeatDao;
 	
 	public FlightServiceImpl() {
 		this.flightDao = new FlightDaoImpl();
+		this.referenceSeatDao = new ReferenceSeatDaoImpl();
 	}
 	
 	@Override
@@ -103,6 +107,9 @@ public class FlightServiceImpl implements FlightService {
 			flight.setArrivalPlace(arrivalPlaceObject);
 			flight.setPlaneNo(planeObject);
 			flight = flightDao.saveFlight(flight);
+			
+			//----Flights seats copy------
+			referenceSeatDao.copyReferenceSeatsToFlightSeats(flight.getPlaneNo().getPlaneId(), flight.getFlightId());
 		}
 		else {
 			flight = null;

@@ -31,6 +31,11 @@ public class TaxServiceImpl implements TaxService {
 	}
 	
 	@Override
+	public Tax getCurrentTax() {
+		return taxDao.getCurrentTax();
+	}
+	
+	@Override
 	public List<Tax> getTaxes(boolean oldTaxes) {
 		
 		return taxDao.getTaxes(oldTaxes);

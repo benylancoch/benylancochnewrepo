@@ -13,6 +13,10 @@ public interface UserDao {
 	
 	User saveUser(User user) throws NoSuchAlgorithmException, InvalidKeySpecException;
 	
+	User saveUserNoPassword(User user);
+	
+	User saveUserPasswordOnly(User user) throws NoSuchAlgorithmException, InvalidKeySpecException;
+	
 	void deleteUser(Long userId);
 	
 

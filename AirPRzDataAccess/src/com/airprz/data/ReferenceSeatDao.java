@@ -16,6 +16,8 @@ public interface ReferenceSeatDao {
 	
 	public Boolean addMultipleReferenceSeats(Long seatClass, Long seatNoStart, Long seatNoEnd, String planeNo);
 	
+	public Boolean copyReferenceSeatsToFlightSeats(String planeNo, Long flightId);
+	
 	public void deleteReferenceSeat(Long referenceSeatId);
 
 }

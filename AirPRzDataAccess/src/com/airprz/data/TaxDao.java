@@ -9,6 +9,8 @@ public interface TaxDao {
 	
 	Tax getTax(Long taxId);
 	
+	Tax getCurrentTax();
+	
 	List<Tax> getTaxes(boolean oldTaxes);
 	
 	Tax saveTax(Tax tax);

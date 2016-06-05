@@ -98,6 +98,99 @@
 						 </h:column>
 					</h:dataTable>
 					</div>
+					
+					<br/>
+					<h1>Fly Back search results</h1>
+					<div class="table-responsive">
+					<h:dataTable rowIndexVar="row" value="#{searchController.listBackSearchResults()}"
+						 var="itemb" styleClass="table table-striped">
+						 <h:column>
+						 	<h:dataTable value="#{itemb}"
+							 var="subitemb" styleClass="table table-striped">
+								 <h:column>
+								 	<f:facet name="header">Flight No</f:facet>
+								 	#{subitemb.flightNo}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Departure date</f:facet>
+								 	<h:outputText value="#{subitemb.starts}">
+								 		<f:convertDateTime pattern="yyyy-MM-dd HH:mm" type="both" />
+								 	</h:outputText>
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Departure date</f:facet>
+								 	<h:outputText value="#{subitemb.ends}">
+								 		<f:convertDateTime pattern="yyyy-MM-dd HH:mm" type="both" />
+								 	</h:outputText>
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Flight</f:facet>
+								 	#{"From "} #{subitemb.departurePlace.name}<br/>
+								 	#{"to "} #{subitemb.arrivalPlace.name}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">EST flight time</f:facet>
+								 	<h:outputText value="#{searchController.estTime(subitemb.starts, subitemb.ends)}">
+								 	<f:convertDateTime pattern="HH 'hours' mm 'minutes'" type="time" />
+								 	</h:outputText>
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Available seats</f:facet>
+								 	#{subitemb.planeNo.seats}
+								 </h:column>
+								 
+								 <h:column>
+								 	<f:facet name="header">Tickets available</f:facet>
+								 	
+								 	<div class="btn-group">
+				                		<h:commandButton value="Add to basket" action="#{basketController.addToBasket(itemb, 'ECONOMY')}" styleClass="btn btn-success btn-xs">
+				                			<f:ajax execute="@form" render="headerForm" />
+				                		</h:commandButton>
+				                	</div>
+								 	<h:outputText value="#{' Economy Class: '}"/>
+								 	<h:outputText value="#{searchController.economyPrice(subitemb)}">
+								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
+								 	</h:outputText><br/>
+								 	
+				                	
+				                	<br/>
+								 	
+								 	<div class="btn-group">
+				                		<h:commandButton value="Add to basket" action="#{basketController.addToBasket(itemb, 'BUSINESS')}" styleClass="btn btn-success btn-xs" 
+				                			rendered="#{subitemb.planeNo.classes >= 2}">
+				                			<f:ajax execute="@form" render="headerForm" />
+				                		</h:commandButton>
+				                	</div>
+				                	
+				                	
+								 	<h:outputText value="#{' Business Class: '}" rendered="#{subitemb.planeNo.classes >= 2}" />
+								 	<h:outputText value="#{searchController.businessPrice(subitemb)}" rendered="#{subitemb.planeNo.classes >= 2}">
+								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
+								 	</h:outputText><br/><br/>
+								 	
+								 	
+								 	
+								 	<div class="btn-group">
+				                		<h:commandButton value="Add to basket" action="#{basketController.addToBasket(itemb, 'FIRSTCLASS')}" styleClass="btn btn-success btn-xs" 
+				                			rendered="#{subitemb.planeNo.classes >= 3}">
+				                			<f:ajax execute="@form" render="headerForm" />
+				                		</h:commandButton>
+				                	</div>
+								 	<h:outputText value="#{' First Class: '}" rendered="#{subitemb.planeNo.classes >= 3}" />
+								 	<h:outputText value="#{searchController.firstClassPrice(subitemb)}" rendered="#{subitemb.planeNo.classes >= 3}">
+								 		<f:convertNumber currencySymbol="€" groupingUsed="true" maxFractionDigits="2" type="currency" />
+								 	</h:outputText>
+								 </h:column>
+								 
+								 </h:dataTable>
+						 </h:column>
+					</h:dataTable>
+					</div>
 			</h:form>
 			
 		</div>

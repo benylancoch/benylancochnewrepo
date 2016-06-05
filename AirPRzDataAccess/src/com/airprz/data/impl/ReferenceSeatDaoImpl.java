@@ -200,6 +200,36 @@ public class ReferenceSeatDaoImpl implements ReferenceSeatDao {
 		return true;
 	}
 	
+	
+	@Override
+	public Boolean copyReferenceSeatsToFlightSeats(String planeNo, Long flightId) {
+		
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			connection = DbConnector.getConnection();
+			
+			stmt = connection.prepareStatement(
+					"INSERT INTO BAZA.FLIGHTS_SEATS (CLASS, SEAT_NO, FREE, WHERE_LOC, PLANE_NO, FLIGHT_ID) "
+					+ "SELECT CLASS, SEAT_NO, FREE, WHERE_LOC, PLANE_NO, ? FROM BAZA.REFERENCE_SEATS "
+					+ "WHERE PLANE_NO = ?");
+			stmt.setLong(1, flightId);
+			stmt.setString(2, planeNo);
+			stmt.executeUpdate();
+			
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JdbcCloses.closeIgnoreError(stmt);
+			JdbcCloses.closeIgnoreError(connection);
+		}
+		
+		return true;
+	}
+	
 	@Override
 	public void deleteReferenceSeat(Long referenceSeatId) {
 		Connection connection = null;

@@ -5,7 +5,7 @@
 	
 	<ul class="nav nav-sidebar">
 		<h:form class="container col-md-12" id="searchForm">
-			<h1>Flights</h1>
+			<h1>Search for flights:</h1>
 			
 			<div class="btn-group">
           		<h:commandButton value="Change to One way only" action="#{searchBean.changeOneWay}" styleClass="btn btn-primary" rendered="#{searchBean.oneWay == false}">
@@ -60,7 +60,7 @@
 				<h:message for="flyBackStart" style="color:red" /><br/>
 				
 				<h:outputText value="Fly back (end date)*: " styleClass="control-label" rendered="#{searchBean.oneWay == false}"/>
-				<h:inputText id="flyBackEnd" label="Validation error" value="#{searchBean.flyBackDateStart}" styleClass="form-control" autocomplete="false" 
+				<h:inputText id="flyBackEnd" label="Validation error" value="#{searchBean.flyBackDateEnd}" styleClass="form-control" autocomplete="false" 
 					rendered="#{searchBean.oneWay == false}">
 					<f:convertDateTime pattern="yyyy-MM-dd" type="both" />
 				</h:inputText>
@@ -79,11 +79,5 @@
 			<h:commandButton id="SearchButton" value="Search!" action="#{searchController.search}" styleClass="btn btn-primary" />
 			
 		</h:form>
-	</ul>
-    <ul class="nav nav-sidebar">
-        <li class="active"><a href="#">Overview</a></li>
-        <li><a href="#">Reports</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Export</a></li>
-    </ul>       
+	</ul>     
 </ui:composition>

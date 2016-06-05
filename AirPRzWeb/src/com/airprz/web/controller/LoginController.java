@@ -68,33 +68,20 @@ public class LoginController {
 		return outcome;
 	}
 	
+	public String update() {
+		userService.updateUserNoPassword(userBean.getUserId(), userBean.getEmail(), userBean.getFirstname(), 
+				userBean.getLastname(), userBean.getHonorific(), userBean.getPhone(), userBean.getName3rd(), userBean.getPhone3rd());
+		return "profile?faces-redirect=true";
+	}
+	
+	public String updatePass() throws NoSuchAlgorithmException, InvalidKeySpecException {
+		userService.changePassword(userBean.getUserId(), userBean.getPassword());
+		return "profile?faces-redirect=true";
+	}
+	
 	
 	public void setUserBean(UserBean userBean) {
 		this.userBean = userBean;
 	}
-	/*private final UserService userService;
-	
-	@ManagedProperty("#{userBean}")
-	private UserBean userBean;
-	
-	public LoginController() {
-		userService = new UserServiceImpl();
-	}
-	
-	public String login() {
-		String outcome = null;
-		
-		User user = userService.authenticateUser(userBean.getUsername());
-		if(user !=null) {
-			userBean.setUserId(user.getId());
-			outcome = "list?faces-redirect=true";
-		}
-		
-		return outcome;
-	}
-	
-	public void setUserBean(UserBean userBean) {
-		this.userBean = userBean;
-	}*/
 
 }

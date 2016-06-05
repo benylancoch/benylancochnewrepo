@@ -16,6 +16,8 @@ public interface ReferenceSeatService {
 	
 	//public Boolean updateMultipleSeatsLocations()
 	
+	public Boolean copyReferenceSeatsToFlightSeats(String planeNo, Long flightId);
+	
 	public ReferenceSeat updateReferenceSeat(Long referenceSeatId, Long SeatClass, Long seatNo, String free, String whereLocation, String planeNo);
 	
 	public void deleteReferenceSeat(Long referenceSeatId);

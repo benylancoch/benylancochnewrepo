@@ -11,12 +11,7 @@
 				<div class="table-responsive">
 					<h:dataTable rowIndexVar="row" value="#{basketBean.basketFlights}"
 						 var="item" styleClass="table table-striped">
-						 <h:column>
-						 	<f:facet name="header">Result Id</f:facet>
-						 	<h:outputText value="#{row + 1}" />
-						 </h:column>
-						 
-						 
+
 						 <h:column>
 						 	<h:dataTable value="#{item}"
 							 var="subitem" styleClass="table table-striped">
@@ -31,6 +26,11 @@
 								 </h:column>
 								 
 								 <h:column>
+								 	<f:facet name="header">EA price</f:facet>
+								 	#{subitem.classPrice}
+								 </h:column>
+								 
+								 <h:column>
 								 	<h:dataTable value="#{subitem.selectedFlight}"
 							 			var="flightItem" styleClass="table table-striped">
 									 <h:column>
@@ -39,13 +39,64 @@
 									 </h:column>
 									 </h:dataTable>
 								 </h:column>
-								 
+								 <h:column headerClass="col-md-1" >
+								 	<div class="btn-group">
+				                		<h:commandButton value="Remove from basket" action="#{basketController.removeTicket(item)}" styleClass="btn btn-danger" />
+				                	</div>
+								 </h:column>
 								 
 								 
 							</h:dataTable>
 						 </h:column>
-					</h:dataTable>
+
+					</h:dataTable>	 
+					
 					</div>
+			</h:form>
+			
+			<h:form id="discountForm">
+			#{"Total: "}
+			#{basketController.calculateTotal()}
+			#{"€"}
+			<h:outputText value=" Discounted total: #{basketController.calculateDiscountedTotal()} €" styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId != null and userBean.userId != null}"/>
+			<br/>
+				<div class="form-inline">
+					<h:outputText value="Discount code: " styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId == null and userBean.userId != null}"/>
+					
+					<h:outputText value="Discount code: #{basketBean.promoCode.code}" styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId != null and userBean.userId != null}"/>
+					
+					
+					<br/>
+					<h:outputText value="Discount: " styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId != null and userBean.userId != null}"/>
+					<h:outputText value="#{basketBean.promoCode.discount}" styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId != null and userBean.userId != null}">
+						<f:convertNumber type="percent" maxFactorDigits="2"/>
+					</h:outputText>
+					
+					
+					<h:outputText value="Discount code: Login to enter discount code" styleClass="control-label" 
+					rendered="#{userBean.userId == null}"/>
+		
+					<h:inputText id="Code" value="#{basketBean.promoCode.code}" styleClass="form-control" autocomplete="false" 
+					rendered="#{basketBean.promoCode.codeId == null and userBean.userId != null}" />
+					#{" "}
+					<h:commandButton value="Update" action="#{basketController.checkDiscount}" styleClass="btn btn-primary" 
+					rendered="#{basketBean.promoCode.codeId == null and userBean.userId != null}">
+						<f:ajax execute="@form" render="discountForm" />
+					</h:commandButton>
+				</div>
+				<br/>
+				#{"Tax total: "}
+				#{basketController.calculateTax()}
+				#{"€"}
+				<br/>
+				#{"Grand total: "}
+				#{basketController.calculateGrandTotal()}
+				#{"€"}
 			</h:form>
 
 		</div>

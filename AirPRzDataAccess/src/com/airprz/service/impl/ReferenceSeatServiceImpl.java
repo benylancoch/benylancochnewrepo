@@ -60,6 +60,12 @@ private final ReferenceSeatDao referenceSeatDao;
 	}
 	
 	@Override
+	public Boolean copyReferenceSeatsToFlightSeats(String planeNo, Long flightId) {
+		
+		return referenceSeatDao.copyReferenceSeatsToFlightSeats(planeNo, flightId);
+	}
+	
+	@Override
 	public ReferenceSeat updateReferenceSeat(Long referenceSeatId, Long SeatClass,
 			Long seatNo, String free, String whereLocation, String planeNo) {
 		ReferenceSeat referenceSeat = referenceSeatDao.getReferenceSeat(referenceSeatId);

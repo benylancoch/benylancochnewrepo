@@ -22,11 +22,18 @@ public class SearchBean {
 	public SearchBean() {
 		oneWay = false;
 		
-		Calendar date1weekPlus = Calendar.getInstance();
-		date1weekPlus.add(Calendar.DAY_OF_WEEK, 7);
+		Calendar dateCalendar = Calendar.getInstance();
+		dateCalendar.add(Calendar.DAY_OF_WEEK, 7);
 		
 		flyOutDateStart = new Date(); //currentDay
-		flyOutDateEnd = date1weekPlus.getTime(); //1 week plus
+		flyOutDateEnd = dateCalendar.getTime(); //1 week plus
+		
+		
+		dateCalendar.add(Calendar.DAY_OF_WEEK, 7); //2 weeks plus
+		flyBackDateStart = dateCalendar.getTime();
+		
+		dateCalendar.add(Calendar.DAY_OF_WEEK, 7); //3 weeks plus
+		flyBackDateEnd = dateCalendar.getTime();
 	}
 
 	public Boolean getOneWay() {

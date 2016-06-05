@@ -119,6 +119,79 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 	
+	@Override
+	public User saveUserNoPassword(User user) {
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			connection = DbConnector.getConnection();
+			
+			stmt = connection.prepareStatement("SELECT EMAIL FROM BAZA.USERS WHERE EMAIL = ?");
+			stmt.setString(1, user.getEmail());
+			
+			rs = stmt.executeQuery();
+			
+			if (!rs.next()) {
+				stmt = connection.prepareStatement(
+						"UPDATE BAZA.USERS SET EMAIL = ?, FIRSTNAME = ? , LASTNAME = ? , HONORIFIC = ? , PHONE = ? , NAME_3RD = ? , PHONE_3RD = ? WHERE USER_ID = ?");
+				stmt.setString(1, user.getEmail());
+				stmt.setString(2, user.getFirstname());
+				stmt.setString(3, user.getLastname());
+				stmt.setLong(4, user.getHonorific());
+				stmt.setString(5, user.getPhone());
+				stmt.setString(6, user.getName_3rd());
+				stmt.setString(7, user.getPhone_3rd());
+				stmt.setLong(8, user.getId());
+				stmt.executeUpdate();
+			}
+			else {
+				user = null;
+				
+			}
+			
+			stmt.close();
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JdbcCloses.closeIgnoreError(stmt);
+			JdbcCloses.closeIgnoreError(connection);
+		}
+		
+		return user;
+	}
+	
+	@Override
+	public User saveUserPasswordOnly(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		
+		
+		try {
+			connection = DbConnector.getConnection();
+
+			stmt = connection.prepareStatement(
+					"UPDATE BAZA.USERS SET PASSWORD = ? WHERE USER_ID = ?");
+			stmt.setString(1, generatePasswordHash(user.getPassword()));
+			stmt.setLong(2, user.getId());
+			stmt.executeUpdate();
+		
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JdbcCloses.closeIgnoreError(stmt);
+			JdbcCloses.closeIgnoreError(connection);
+		}
+		
+		return user;
+	}
+	
 	private User insertUser(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		
 		Connection connection = null;

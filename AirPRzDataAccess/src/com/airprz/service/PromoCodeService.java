@@ -11,6 +11,8 @@ public interface PromoCodeService {
 	
 	PromoCode getPromoCode(Long codeId);
 	
+	PromoCode searchForPromoCode(String promoCode);
+	
 	List<PromoCode> getPromoCodes(boolean valid);
 	
 	PromoCode addPromoCode(String code, String description, BigDecimal discount, String multiple, Date validFrom, Date validTo);

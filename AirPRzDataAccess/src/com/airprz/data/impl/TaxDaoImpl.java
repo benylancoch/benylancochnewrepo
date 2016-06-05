@@ -54,6 +54,47 @@ public class TaxDaoImpl implements TaxDao {
 		return tax;
 	}
 	
+	public Tax getCurrentTax() {
+		
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		
+		Tax tax = null;
+		try {
+			connection = DbConnector.getConnection();
+			stmt = connection.prepareStatement(
+					"SELECT T.TAX_ID, T.VALUE, T.DESCRIPTION, T.VALID_FROM, T.VALID_TO "
+					+ "FROM BAZA.TAXES T "
+					+ "WHERE CAST(T.VALID_TO as CHAR) is NULL");
+			
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				tax = new Tax();
+				tax.setTaxId(rs.getLong("TAX_ID"));
+				tax.setValue(rs.getBigDecimal("VALUE"));
+				tax.setDescription(rs.getString("DESCRIPTION"));
+				tax.setValidFrom(rs.getTimestamp("VALID_FROM"));
+				tax.setValidTo(rs.getTimestamp("VALID_TO"));
+				
+			}
+			
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JdbcCloses.closeIgnoreError(rs);
+			JdbcCloses.closeIgnoreError(stmt);
+			JdbcCloses.closeIgnoreError(connection);
+		}
+		
+		return tax;
+		
+	}
+	
 	@Override
 	public List<Tax> getTaxes(boolean oldTaxes) {
 		Connection connection = null;

@@ -16,11 +16,18 @@ public class BasketBean {
 	
 	private List<BasketSelectedFlight> basketFlights;
 	private BigDecimal total;
+	private BigDecimal discountValue;
+	private BigDecimal taxTotal;
+	private BigDecimal grandTotal;
 	private PromoCode promoCode;
 	
 	public BasketBean() {
 		basketFlights = new ArrayList<BasketSelectedFlight>();
 		total = new BigDecimal(0);
+		discountValue = new BigDecimal(0);
+		taxTotal = new BigDecimal(0);
+		grandTotal = new BigDecimal(0);
+		promoCode = new PromoCode();
 	}
 
 	public List<BasketSelectedFlight> getBasketFlights() {
@@ -94,6 +101,31 @@ public class BasketBean {
 			
 			this.basketFlights.get(index).addTicket(flightToAdd.getNoOfTickets());
 		}
+	
+	}
+
+	public BigDecimal getDiscountValue() {
+		return discountValue;
+	}
+
+	public void setDiscountValue(BigDecimal discountValue) {
+		this.discountValue = discountValue;
+	}
+
+	public BigDecimal getTaxTotal() {
+		return taxTotal;
+	}
+
+	public void setTaxTotal(BigDecimal taxTotal) {
+		this.taxTotal = taxTotal;
+	}
+
+	public BigDecimal getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(BigDecimal grandTotal) {
+		this.grandTotal = grandTotal;
 	}
 
 }
