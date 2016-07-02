@@ -109,6 +109,17 @@ public class FlightSeatServiceImpl implements FlightSeatService {
 	}
 	
 	@Override
+	public FlightSeat reserveSeat(Long seatNo, Long flightId) {
+		FlightSeat flightSeat = null;
+		
+		if (seatNo != null && flightId != null && !"".equals(seatNo)) {
+			flightSeat = flightSeatDao.reserveSeat(seatNo, flightId);
+		}
+		
+		return flightSeat;
+	}
+	
+	@Override
 	public void deleteFlightSeat(Long flightSeatId) {
 		
 		FlightSeat flightSeat = flightSeatDao.getFlightSeat(flightSeatId);

@@ -1,6 +1,7 @@
 package com.airprz.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BasketSelectedFlight {
@@ -9,9 +10,11 @@ public class BasketSelectedFlight {
 	private String classSelected;
 	private BigDecimal classPrice;
 	private Long noOfTickets;
-	
+	private List<Ticket> ticketsInBasket;
+
 	public BasketSelectedFlight() {
 		classPrice = new BigDecimal("0.0");
+		ticketsInBasket = new ArrayList<Ticket>();
 	}
 	public List<Flight> getSelectedFlight() {
 		return selectedFlight;
@@ -53,6 +56,16 @@ public class BasketSelectedFlight {
 		}
 		
 		return true;
+	}
+	
+	public void addTicketsInBasket(Ticket ticket) {
+		this.ticketsInBasket.add(ticket);
+	}
+	public List<Ticket> getTicketsInBasket() {
+		return ticketsInBasket;
+	}
+	public void setTicketsInBasket(List<Ticket> ticketsInBasket) {
+		this.ticketsInBasket = ticketsInBasket;
 	}
 	
 }

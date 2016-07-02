@@ -20,6 +20,8 @@ public interface FlightSeatDao {
 	
 	public FlightSeat bookSeat(Long seatNo, Long flightId);
 	
+	public FlightSeat reserveSeat(Long seatNo, Long flightId);
+	
 	public void deleteFlightSeat(Long flightSeatId);
 
 }

@@ -13,6 +13,9 @@ public class Ticket {
 	private FlightSeat flightSeat;
 	private Ticket nextFlight;
 	private Transaction transaction;
+	private String otherUserName;
+	private String otherUserPhone;
+	private Long otherUserHonorific;
 	
 	public Long getTicketId() {
 		return ticketId;
@@ -61,6 +64,24 @@ public class Ticket {
 	}
 	public void setTransaction(Transaction transaction) {
 		this.transaction = transaction;
+	}
+	public String getOtherUserName() {
+		return otherUserName;
+	}
+	public void setOtherUserName(String otherUserName) {
+		this.otherUserName = otherUserName;
+	}
+	public String getOtherUserPhone() {
+		return otherUserPhone;
+	}
+	public void setOtherUserPhone(String otherUserPhone) {
+		this.otherUserPhone = otherUserPhone;
+	}
+	public Long getOtherUserHonorific() {
+		return otherUserHonorific;
+	}
+	public void setOtherUserHonorific(Long otherUserHonorific) {
+		this.otherUserHonorific = otherUserHonorific;
 	}
 	
 

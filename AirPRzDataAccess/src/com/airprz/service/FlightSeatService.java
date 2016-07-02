@@ -20,6 +20,8 @@ public interface FlightSeatService {
 	
 	public FlightSeat bookSeat(Long seatNo, Long flightId);
 	
+	public FlightSeat reserveSeat(Long seatNo, Long flightId);
+	
 	public void deleteFlightSeat(Long flightSeatId);
 
 }

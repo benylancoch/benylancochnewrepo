@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.airprz.data.FlightSeatDao;
@@ -29,11 +32,16 @@ public class FlightSeatDaoImpl implements FlightSeatDao {
 		try {
 			connection = DbConnector.getConnection();
 			stmt = connection.prepareStatement(
-					"SELECT FS.FS_ID, FS.CLASS, FS.SEAT_NO, FS.FREE, FS.WHERE_LOC, FS.PLANE_NO, FS.FLIGHT_ID "
+					"SELECT FS.FS_ID, FS.CLASS, FS.SEAT_NO, FS.FREE, FS.WHERE_LOC, FS.PLANE_NO, FS.FLIGHT_ID, FS.RESERVED_TO "
 					+ "FROM BAZA.FLIGHTS_SEATS FS "
-					+ "WHERE FS.SEAT_NO = ? AND FS.FLIGHT_ID = ?");
+					+ "WHERE FS.SEAT_NO = ? AND FS.FLIGHT_ID = ? AND (FS.RESERVED < ? OR FS.RESERVED_TO IS NULL)");
 			stmt.setLong(1, seatNo);
 			stmt.setLong(2, flightId);
+			Date dNow = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dNow);
+			cal.add(Calendar.MINUTE, -10);
+			stmt.setTimestamp(3, new Timestamp(cal.getTime().getTime()));
 			
 			rs = stmt.executeQuery();
 			if(rs.next()) {
@@ -177,13 +185,18 @@ public class FlightSeatDaoImpl implements FlightSeatDao {
 		try {
 			connection = DbConnector.getConnection();
 			stmt = connection.prepareStatement(
-					"SELECT FS.FS_ID, FS.CLASS, FS.SEAT_NO, FS.FREE, FS.WHERE_LOC, FS.PLANE_NO, FS.FLIGHT_ID "
+					"SELECT FS.FS_ID, FS.CLASS, FS.SEAT_NO, FS.FREE, FS.WHERE_LOC, FS.PLANE_NO, FS.FLIGHT_ID, FS.RESERVED_TO "
 							+ "FROM BAZA.FLIGHTS_SEATS FS "
-							+ "WHERE FS.CLASS = ? AND FS.WHERE_LOC = ? AND FS.FLIGHT_ID = ? AND FS.FREE = 'Y'");
+							+ "WHERE FS.CLASS = ? AND FS.WHERE_LOC = ? AND FS.FLIGHT_ID = ? AND FS.FREE = 'Y' AND (FS.RESERVED_TO < ? OR CAST(FS.RESERVED_TO as CHAR) is NULL)");
 			
 			stmt.setLong(1, seatClass);
 			stmt.setString(2, location);
 			stmt.setLong(3, flightId);
+			Date dNow = new Date();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dNow);
+			cal.add(Calendar.MINUTE, -10);
+			stmt.setTimestamp(4, new Timestamp(cal.getTime().getTime()));
 			
 			
 			rs = stmt.executeQuery();
@@ -199,6 +212,7 @@ public class FlightSeatDaoImpl implements FlightSeatDao {
 				flightSeat.setSeatNo(rs.getLong("SEAT_NO"));
 				flightSeat.setFree(rs.getString("FREE"));
 				flightSeat.setWhereLoc(rs.getString("WHERE_LOC"));
+				flightSeat.setReservedTo(rs.getTimestamp("RESERVED_TO"));
 				
 				flightSeat.setPlane(plane);
 				flightSeat.setFlight(flight);
@@ -231,7 +245,7 @@ public class FlightSeatDaoImpl implements FlightSeatDao {
 		try {
 			connection = DbConnector.getConnection();
 			stmt = connection.prepareStatement(
-					"SELECT FS.FS_ID, FS.CLASS, FS.SEAT_NO, FS.FREE, FS.WHERE_LOC, FS.PLANE_NO, FS.FLIGHT_ID "
+					"SELECT FS.FS_ID, FS.CLASS, FS.SEAT_NO, FS.FREE, FS.WHERE_LOC, FS.PLANE_NO, FS.FLIGHT_ID, FS.RESERVED_TO "
 							+ "FROM BAZA.FLIGHTS_SEATS FS "
 							+ "WHERE FS.FLIGHT_ID = ?");
 			
@@ -251,6 +265,7 @@ public class FlightSeatDaoImpl implements FlightSeatDao {
 				flightSeat.setSeatNo(rs.getLong("SEAT_NO"));
 				flightSeat.setFree(rs.getString("FREE"));
 				flightSeat.setWhereLoc(rs.getString("WHERE_LOC"));
+				flightSeat.setReservedTo(rs.getTimestamp("RESERVED_TO"));
 				
 				flightSeat.setPlane(plane);
 				flightSeat.setFlight(flight);
@@ -296,6 +311,36 @@ public class FlightSeatDaoImpl implements FlightSeatDao {
 			stmt.setString(1, "N");
 			stmt.setLong(2, seatNo);
 			stmt.setLong(3, flightId);
+			stmt.executeUpdate();
+			
+			stmt.close();
+			
+			flightSeat = this.getFlightSeatBySeatNo(seatNo, flightId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JdbcCloses.closeIgnoreError(stmt);
+			JdbcCloses.closeIgnoreError(connection);
+		}
+		
+		return flightSeat;
+	}
+	
+	@Override
+	public FlightSeat reserveSeat(Long seatNo, Long flightId) {
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		FlightSeat flightSeat = null;
+		
+		
+		try {
+			connection = DbConnector.getConnection();
+			
+			stmt = connection.prepareStatement(
+					"UPDATE BAZA.FLIGHTS_SEATS SET RESERVED_TO = current timestamp WHERE SEAT_NO = ? AND FLIGHT_ID = ?");
+			stmt.setLong(1, seatNo);
+			stmt.setLong(2, flightId);
 			stmt.executeUpdate();
 			
 			stmt.close();

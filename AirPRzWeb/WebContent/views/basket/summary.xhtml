@@ -4,8 +4,9 @@
                 xmlns:f="http://java.sun.com/jsf/core"  
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:define name="content">  
-		<div class="container col-md-12">
-			<h1>Basket</h1>
+    
+    	<div class="container col-md-12">
+			<h1>Summary</h1>
 			
 			<h:form>				
 				<div class="table-responsive">
@@ -31,11 +32,29 @@
 								 </h:column>
 								 
 								 <h:column>
-								 	<h:dataTable value="#{subitem.selectedFlight}"
-							 			var="flightItem" styleClass="table table-striped">
+								 	<h:dataTable value="#{subitem.ticketsInBasket}"
+							 			var="ticketItem" styleClass="table table-striped">
 									 <h:column>
 									 	<f:facet name="header">Flight No</f:facet>
-									 	#{flightItem.flightNo}
+									 	#{ticketItem.flight.flightNo}
+									 </h:column>
+									 <h:column>
+									 	<f:facet name="header">Seat No</f:facet>
+									 	#{ticketItem.flightSeat.seatNo}
+									 </h:column>
+									 <h:column>
+									 	<f:facet name="header">Seat class</f:facet>
+									 	<h:outputText value="#{basketController.whatClass(ticketItem.flightSeat.fsClass)}" />
+									 </h:column>
+									 <h:column>
+									 	<f:facet name="header">Ticket for</f:facet>
+									 	<h:outputText value="#{ticketItem.user.firstname} #{ticketItem.user.lastname}" rendered="#{ticketItem.otherUserName == null}"/>
+									 	
+									 	<h:outputText value="#{ticketItem.otherUserName}" rendered="#{ticketItem.otherUserName != null}"/>
+									 </h:column>
+									 <h:column>
+									 	<f:facet name="header">Ticket Price</f:facet>
+									 	#{ticketItem.price}
 									 </h:column>
 									 </h:dataTable>
 								 </h:column>
@@ -98,10 +117,10 @@
 				#{basketController.calculateGrandTotal()}
 				#{"€"}
 				<br/>
-				<h:commandButton id="checkout" value="Checkout" action="#{basketController.checkout}" styleClass="btn btn-success" 
+				<h:commandButton id="pay" value="Finalize" action="#{basketController.finalize}" styleClass="btn btn-success" 
 				rendered="#{!basketController.basketIsEmpty()}"/>
 			</h:form>
 
 		</div>
-    </ui:define>
+</ui:define>
 </ui:composition>

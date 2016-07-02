@@ -1,11 +1,14 @@
 package com.airprz.model;
 
+import java.sql.Timestamp;
+
 public class FlightSeat {
 	
 	private Long fsId;
 	private Long fsClass;
 	private Long seatNo;
 	private String free;
+	private Timestamp reservedTo;
 	private String whereLoc;
 	private Plane plane;
 	private Flight flight;
@@ -51,6 +54,12 @@ public class FlightSeat {
 	}
 	public void setFlight(Flight flightId) {
 		this.flight = flightId;
+	}
+	public Timestamp getReservedTo() {
+		return reservedTo;
+	}
+	public void setReservedTo(Timestamp reservedTo) {
+		this.reservedTo = reservedTo;
 	}
 
 }
