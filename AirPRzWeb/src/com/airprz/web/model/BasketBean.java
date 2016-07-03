@@ -57,6 +57,10 @@ public class BasketBean {
 	public Long getBasketItemsCount() {
 		Long tmp = new Long(0);
 		
+		if (this.basketFlights == null) {
+			return tmp;
+		}
+		
 		for (BasketSelectedFlight item : this.basketFlights) {
 			tmp = tmp + item.getNoOfTickets();
 		}

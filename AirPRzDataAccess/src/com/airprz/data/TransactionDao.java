@@ -9,11 +9,13 @@ public interface TransactionDao {
 	
 	Transaction getTransaction(Long transactionId);
 	
-	List<Transaction> getTransactions(Timestamp start, Timestamp end);
+	List<Transaction> getTransactions(Timestamp start, Timestamp end, Boolean paid);
 	
-	Transaction addTransaction(Transaction transaction);
+	List<Transaction> getUserTransactions(Timestamp start, Timestamp end, Long userId);
 	
-	Transaction updateTransaction(Transaction transaction);
+	Transaction saveTransaction(Transaction transaction);
+	
+	Transaction markAsPaid(Transaction transaction);
 	
 	void deleteTransaction(Long transactionId);
 

@@ -2,30 +2,37 @@ package com.airprz.web.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
+import com.airprz.data.TicketDao;
 import com.airprz.model.BasketSelectedFlight;
 import com.airprz.model.Flight;
 import com.airprz.model.FlightSeat;
 import com.airprz.model.PromoCode;
 import com.airprz.model.Tax;
 import com.airprz.model.Ticket;
+import com.airprz.model.Transaction;
 import com.airprz.model.User;
 import com.airprz.model.UserPromoCode;
 import com.airprz.service.FlightSeatService;
 import com.airprz.service.PromoCodeService;
 import com.airprz.service.TaxService;
+import com.airprz.service.TicketService;
+import com.airprz.service.TransactionService;
 import com.airprz.service.UserPromoCodeService;
 import com.airprz.service.impl.FlightSeatServiceImpl;
 import com.airprz.service.impl.PromoCodeServiceImpl;
 import com.airprz.service.impl.TaxServiceImpl;
+import com.airprz.service.impl.TicketServiceImpl;
+import com.airprz.service.impl.TransactionServiceImpl;
 import com.airprz.service.impl.UserPromoCodeServiceImpl;
 import com.airprz.web.model.BasketBean;
+import com.airprz.web.model.FinalizedTransactionBean;
 import com.airprz.web.model.SeatSearchBean;
 import com.airprz.web.model.UserBean;
 
@@ -37,6 +44,8 @@ public class BasketController {
 	private final PromoCodeService promoCodeService;
 	private final UserPromoCodeService userPromoCodeService;
 	private final FlightSeatService flightSeatService;
+	private final TransactionService transactionService;
+	private final TicketService ticektService;
 	
 	@ManagedProperty("#{basketBean}")
 	private BasketBean basketBean;
@@ -47,11 +56,16 @@ public class BasketController {
 	@ManagedProperty("#{seatSearchBean}")
 	private SeatSearchBean seatSearchBean;
 	
+	@ManagedProperty("#{finalizedTransactionBean}")
+	private FinalizedTransactionBean finalizedTransactionBean;
+	
 	public BasketController() {
 		taxService = new TaxServiceImpl();
 		promoCodeService = new PromoCodeServiceImpl();
 		userPromoCodeService = new UserPromoCodeServiceImpl();
 		flightSeatService = new FlightSeatServiceImpl();
+		transactionService = new TransactionServiceImpl();
+		ticektService = new TicketServiceImpl();
 	}
 	
 	public void addToBasket(List<Flight> selectedFlights, String classSelected) {
@@ -110,7 +124,9 @@ public class BasketController {
 		BigDecimal tmp = basketBean.getTotal();
 		Tax tax = taxService.getCurrentTax();
 		
-		tmp = tmp.subtract(basketBean.getDiscountValue());
+		if (basketBean.getPromoCode() != null) {
+			tmp = tmp.subtract(basketBean.getDiscountValue());
+		}
 		tmp = tmp.multiply(tax.getValue());
 		
 		basketBean.setTaxTotal(tmp.setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -121,7 +137,9 @@ public class BasketController {
 		
 		BigDecimal tmp = basketBean.getTotal();
 		
-		tmp = tmp.subtract(basketBean.getDiscountValue());
+		if (basketBean.getPromoCode() != null) {
+			tmp = tmp.subtract(basketBean.getDiscountValue());
+		}
 		tmp = tmp.add(basketBean.getTaxTotal());
 		
 		basketBean.setGrandTotal(tmp.setScale(2, BigDecimal.ROUND_HALF_UP));
@@ -132,13 +150,19 @@ public BigDecimal calculateDiscountedTotal() {
 		
 		BigDecimal tmp = basketBean.getTotal();
 		
-		tmp = tmp.multiply(basketBean.getPromoCode().getDiscount());
-		
-		basketBean.setDiscountValue(tmp.setScale(2, BigDecimal.ROUND_HALF_UP));
-		
-		tmp = basketBean.getTotal();
-		tmp = tmp.subtract(basketBean.getDiscountValue());
-		return tmp.setScale(2, BigDecimal.ROUND_HALF_UP);
+		if (basketBean.getPromoCode() != null) {
+			tmp = tmp.multiply(basketBean.getPromoCode().getDiscount());
+			
+			basketBean.setDiscountValue(tmp.setScale(2, BigDecimal.ROUND_HALF_UP));
+			
+			tmp = basketBean.getTotal();
+			tmp = tmp.subtract(basketBean.getDiscountValue());
+			return tmp.setScale(2, BigDecimal.ROUND_HALF_UP);
+		}
+		else {
+			basketBean.setDiscountValue(new BigDecimal(0));
+			return new BigDecimal(0);
+		}
 	}
 	
 	public void checkDiscount() {
@@ -316,6 +340,10 @@ public BigDecimal calculateDiscountedTotal() {
 		this.seatSearchBean = seatSearchBean;
 	}
 	
+	public void setFinalizedTransactionBean(FinalizedTransactionBean finalizedTransactionBean) {
+		this.finalizedTransactionBean = finalizedTransactionBean;
+	}
+	
 	public String whatClass(Long classToCompare) {
 		if (classToCompare.equals(new Long(1))) {
 			return "ECONOMY";
@@ -329,6 +357,70 @@ public BigDecimal calculateDiscountedTotal() {
 		else {
 			return "UNKNOWN CLASS";
 		}
+	}
+	
+	public String whatLocation(String location) {
+		String result;
+		String[] tmp = location.split("|");
+		if (tmp[0].contentEquals("W")) {
+			result = "By window";
+		}
+		else if (tmp[0].contentEquals("M")) {
+			result = "In the middle of seats row";
+		}
+		else
+		{
+			result = "By corridor";
+		}
+		
+		if (tmp[1].contentEquals("F")) {
+			result += " at the front of plane";
+		}
+		else if (tmp[1].contentEquals("M")) {
+			result += " at the middle of plane";
+		}
+		else {
+			result += " at the back of plane";
+		}
+		
+		return result;
+	}
+	
+	public String finalizeOrder() {
+		Date currentDate = new Date();
+		Transaction transaction = null;
+		if (basketBean.getPromoCode().getCodeId() != null) {
+			transaction = transactionService.addTransaction(currentDate, "BT", userBean.getUserId(), basketBean.getPromoCode().getCodeId());
+		}
+		else {
+			transaction = transactionService.addTransaction(currentDate, "BT", userBean.getUserId(), new Long(0));
+		}
+		finalizedTransactionBean.setTransaction(transaction);
+		
+		List<BasketSelectedFlight> tmp = basketBean.getBasketFlights();
+		for (BasketSelectedFlight flight : tmp) {
+			List<Ticket> tickets = new ArrayList<Ticket>();
+			tickets = flight.getTicketsInBasket();
+			for (Ticket ticket : tickets) {
+				ticektService.addTicket(ticket.getPrice(), userBean.getUserId(), ticket.getFlight().getFlightId(), ticket.getFlightSeat().getFsId(), 
+						transaction.getTransactionId(), ticket.getOtherUserName(), ticket.getOtherUserPhone(), ticket.getOtherUserHonorific());
+			}
+		}
+		
+		basketBean.setBasketFlights(new ArrayList<BasketSelectedFlight>());
+		basketBean.setDiscountValue(new BigDecimal(0));
+		basketBean.setGrandTotal(new BigDecimal(0));
+		basketBean.setPromoCode(new PromoCode());
+		basketBean.setTaxTotal(new BigDecimal(0));
+		basketBean.setTotal(new BigDecimal(0));
+		
+		return "ordercomplete?faces-redirect=true";
+	}
+	
+	public List<Ticket> getTickets(Long transactionId) {
+		List<Ticket> tickets = ticektService.getTicketesFromTransaction(transactionId);
+		
+		return tickets;
 	}
 	
 	private Long longClassFromString(String classString) {

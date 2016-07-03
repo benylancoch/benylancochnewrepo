@@ -10,11 +10,15 @@ public interface TransactionService {
 	
 	Transaction getTransaction(Long transactionId);
 	
-	List<Transaction> getTransactions(Timestamp start, Timestamp end);
+	List<Transaction> getTransactions(Timestamp start, Timestamp end, Boolean paid);
 	
-	Transaction addTransaction(Date date, String paidUsing);
+	List<Transaction> getUserTransactions(Timestamp start, Timestamp end, Long userId);
 	
-	Transaction updateTransaction(Long transactionId, Date date, String paidUsing, Date paidDate);
+	Transaction addTransaction(Date date, String paidUsing, Long userId, Long codeId);
+	
+	Transaction updateTransaction(Long transactionId, Date date, String paidUsing, Date paidDate, Long userId, Long codeId);
+	
+	Transaction markAsPaid(Transaction transaction);
 	
 	void deleteTransaction(Long transactionId);
 

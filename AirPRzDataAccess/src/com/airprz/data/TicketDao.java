@@ -1,6 +1,5 @@
 package com.airprz.data;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.airprz.model.Ticket;
@@ -9,11 +8,9 @@ public interface TicketDao {
 	
 	Ticket getTicket(Long ticketId);
 	
-	List<Ticket> getTicketes(Timestamp start, Timestamp end);
+	List<Ticket> getTicketesFromTransaction(Long transactionId);
 	
-	Ticket addTicket(Ticket ticket);
-	
-	Ticket updateTicket(Ticket ticket);
+	Ticket saveTicket(Ticket ticket);
 	
 	void deleteTicket(Long ticketId);
 

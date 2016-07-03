@@ -117,7 +117,7 @@
 				#{basketController.calculateGrandTotal()}
 				#{"€"}
 				<br/>
-				<h:commandButton id="pay" value="Finalize" action="#{basketController.finalize}" styleClass="btn btn-success" 
+				<h:commandButton id="pay" value="Finalize" action="#{basketController.finalizeOrder}" styleClass="btn btn-success" 
 				rendered="#{!basketController.basketIsEmpty()}"/>
 			</h:form>
 

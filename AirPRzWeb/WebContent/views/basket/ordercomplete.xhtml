@@ -1,0 +1,98 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+    
+    	<div class="container col-md-12">
+			<h1>Order summary</h1>
+			#{finalizedTransactionBean.transaction.transactionId}
+			#{" "}
+			#{finalizedTransactionBean.transaction.date}
+			
+			<h:form>				
+				<div class="table-responsive">
+					<h:dataTable rowIndexVar="row" value="#{basketController.getTickets(finalizedTransactionBean.transaction.transactionId)}"
+						 var="item" styleClass="table table-striped">
+
+						 <h:column>
+						 	<f:facet name="header">Ticekt No</f:facet>
+							#{item.ticketId}
+						 </h:column>
+						 
+						 <h:column>
+						 	<f:facet name="header">Price</f:facet>
+							#{item.price}
+						 </h:column>
+						 
+						 <h:column>
+						 	<f:facet name="header">Flight</f:facet>
+							#{item.flight.flightNo}
+						 </h:column>
+						 
+						 <h:column>
+						 	<f:facet name="header">Departure</f:facet>
+							#{item.flight.departurePlace.name}
+							<br/>
+							#{item.flight.starts}
+						 </h:column>
+						 
+						 <h:column>
+						 	<f:facet name="header">Arrival</f:facet>
+							#{item.flight.arrivalPlace.name}
+							<br/>
+							#{item.flight.ends}
+						 </h:column>
+						 
+						 <h:column>
+						 	<f:facet name="header">Seat</f:facet>
+						 	#{"Seat no: "}
+							#{item.flightSeat.seatNo}
+							#{" class: "}
+							#{basketController.whatClass(item.flightSeat.fsClass)}
+							<br/>
+							#{"Seat location: "}
+							#{basketController.whatLocation(item.flightSeat.whereLoc)}
+						 </h:column>
+
+					</h:dataTable>	 
+					
+					</div>
+			</h:form>
+			
+			<h:form id="discountForm">
+			#{"Total: "}
+			#{basketController.calculateTotal()}
+			#{"€"}
+			<h:outputText value=" Discounted total: #{basketController.calculateDiscountedTotal()} €" styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId != null and userBean.userId != null}"/>
+			<br/>
+				<div class="form-inline">
+					
+					<h:outputText value="Discount code: #{basketBean.promoCode.code}" styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId != null and userBean.userId != null}"/>
+					
+					
+					<br/>
+					<h:outputText value="#{basketBean.promoCode.discount}" styleClass="control-label" 
+					rendered="#{basketBean.promoCode.codeId != null and userBean.userId != null}">
+						<f:convertNumber type="percent" maxFactorDigits="2"/>
+					</h:outputText>
+				</div>
+				<br/>
+				#{"Tax total: "}
+				#{basketController.calculateTax()}
+				#{"€"}
+				<br/>
+				#{"Grand total: "}
+				#{basketController.calculateGrandTotal()}
+				#{"€"}
+				<br/>
+				<h:commandButton id="pay" value="Finalize" action="#{basketController.finalizeOrder}" styleClass="btn btn-success" 
+				rendered="#{!basketController.basketIsEmpty()}"/>
+			</h:form>
+
+		</div>
+</ui:define>
+</ui:composition>

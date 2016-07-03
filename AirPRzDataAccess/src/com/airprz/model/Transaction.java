@@ -9,6 +9,8 @@ public class Transaction {
 	private String paidUsing;
 	private Timestamp paidDate;
 	private Tax tax;
+	private User user;
+	private PromoCode promoCode;
 	
 	public Long getTransactionId() {
 		return transactionId;
@@ -39,6 +41,18 @@ public class Transaction {
 	}
 	public void setTax(Tax tax) {
 		this.tax = tax;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public PromoCode getPromoCode() {
+		return promoCode;
+	}
+	public void setPromoCode(PromoCode promoCode) {
+		this.promoCode = promoCode;
 	}
 	
 
