@@ -34,13 +34,13 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 	
 	@Override
-	public List<Transaction> getTransactions(Timestamp start, Timestamp end, Boolean paid) {
-		return transactionDao.getTransactions(start, end, paid);
+	public List<Transaction> getTransactions(Date start, Date end, Boolean paid) {
+		return transactionDao.getTransactions(new Timestamp(start.getTime()), new Timestamp(end.getTime()), paid);
 	}
 	
 	@Override
-	public List<Transaction> getUserTransactions(Timestamp start, Timestamp end, Long userId) {
-		return transactionDao.getUserTransactions(start, end, userId);
+	public List<Transaction> getUserTransactions(Date start, Date end, Long userId) {
+		return transactionDao.getUserTransactions(new Timestamp(start.getTime()),new Timestamp(end.getTime()), userId);
 	}
 	
 	@Override

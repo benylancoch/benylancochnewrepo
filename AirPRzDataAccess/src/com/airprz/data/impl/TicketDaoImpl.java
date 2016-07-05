@@ -149,9 +149,9 @@ public class TicketDaoImpl implements TicketDao {
 					+ "FROM BAZA.TICKETS T "
 					+ "INNER JOIN BAZA.USERS U "
 					+ "ON T.USER_ID = U.USER_ID "
-					+ "INNER JOIN BAZA.FLIGHTS F "
+					+ "LEFT JOIN BAZA.FLIGHTS F "
 					+ "ON T.FLIGHT_ID = F.FLIGHT_ID "
-					+ "INNER JOIN BAZA.FLIGHTS_SEATS FS "
+					+ "LEFT JOIN BAZA.FLIGHTS_SEATS FS "
 					+ "ON T.FS_ID = FS.FS_ID "
 					+ "WHERE T.TRANSACTION_ID = ? "
 					+ "ORDER BY T.TICKET_ID");

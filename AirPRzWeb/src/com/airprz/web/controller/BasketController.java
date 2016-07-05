@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import com.airprz.data.TicketDao;
 import com.airprz.model.BasketSelectedFlight;
 import com.airprz.model.Flight;
 import com.airprz.model.FlightSeat;
@@ -19,6 +18,7 @@ import com.airprz.model.Ticket;
 import com.airprz.model.Transaction;
 import com.airprz.model.User;
 import com.airprz.model.UserPromoCode;
+import com.airprz.model.misc.SendMail;
 import com.airprz.service.FlightSeatService;
 import com.airprz.service.PromoCodeService;
 import com.airprz.service.TaxService;
@@ -241,6 +241,10 @@ public BigDecimal calculateDiscountedTotal() {
 	public String reserveTicket() {
 		List<FlightSeat> returnedSeats = flightSeatService.searchForFree(seatSearchBean.getClassSelected(), 
 				seatSearchBean.getRowPlace() + "|" + seatSearchBean.getColumnPlace(), seatSearchBean.getSelectedFlight().getFlightId());
+		
+		if (returnedSeats.size() == 0) {
+			return "chooseseatnew?faces-redirect=true";
+		}
 		FlightSeat tmpSeat = flightSeatService.reserveSeat(returnedSeats.get(0).getSeatNo(), returnedSeats.get(0).getFlight().getFlightId());
 		
 		for (BasketSelectedFlight flight : basketBean.getBasketFlights()) {
@@ -402,6 +406,7 @@ public BigDecimal calculateDiscountedTotal() {
 			List<Ticket> tickets = new ArrayList<Ticket>();
 			tickets = flight.getTicketsInBasket();
 			for (Ticket ticket : tickets) {
+				flightSeatService.bookSeat(ticket.getFlightSeat().getSeatNo(), ticket.getFlight().getFlightId());
 				ticektService.addTicket(ticket.getPrice(), userBean.getUserId(), ticket.getFlight().getFlightId(), ticket.getFlightSeat().getFsId(), 
 						transaction.getTransactionId(), ticket.getOtherUserName(), ticket.getOtherUserPhone(), ticket.getOtherUserHonorific());
 			}
@@ -413,6 +418,9 @@ public BigDecimal calculateDiscountedTotal() {
 		basketBean.setPromoCode(new PromoCode());
 		basketBean.setTaxTotal(new BigDecimal(0));
 		basketBean.setTotal(new BigDecimal(0));
+		
+		SendMail mail = new SendMail();
+		mail.sendOrderConfirmation(transaction);
 		
 		return "ordercomplete?faces-redirect=true";
 	}

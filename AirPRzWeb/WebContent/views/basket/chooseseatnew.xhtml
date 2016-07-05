@@ -1,0 +1,85 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+    
+    	<div class="container col-md-6">
+    	<div class="alert alert-danger">
+			<strong>No results found!</strong> Please try searching for other seats.
+		</div>
+    		<h1>
+    			<h:outputText value="Choose seat for flight #{seatSearchBean.selectedFlight.flightNo}" />
+    		</h1>
+
+    		
+                <h:form id="ChooseForm">
+                <div class="form-group">
+					<h:outputText value="Select place where You want to seat in plane: " styleClass="control-label" />
+		
+					<h:selectOneMenu id="rowPlaceF" value="#{seatSearchBean.rowPlace}" styleClass="form-control">
+					   	<f:selectItem itemValue="W" itemLabel="Beside the window" />
+					   	<f:selectItem itemValue="S" itemLabel="Middle of seats row" />
+					   	<f:selectItem itemValue="C" itemLabel="Beside the corrodir" />
+					</h:selectOneMenu>
+					<br/>
+					<h:selectOneMenu id="columnPlaceF" value="#{seatSearchBean.columnPlace}" styleClass="form-control">
+					   	<f:selectItem itemValue="F" itemLabel="Front of the plane" />
+					   	<f:selectItem itemValue="M" itemLabel="Middle of the plane" />
+					   	<f:selectItem itemValue="B" itemLabel="Back of the plane" />
+					</h:selectOneMenu>
+				</div>
+                
+				<div class="form-group">
+					<h:selectBooleanCheckbox value="#{seatSearchBean.nextToEachOther}" /> <h:outputText value=" All tickets next to each other" styleClass="control-label" />
+				</div>
+				
+				<h:commandButton value="Ticket for other person" action="#{seatSearchBean.changeOtherPerson}" styleClass="btn btn-primary"
+				rendered="#{seatSearchBean.differnetPerson==false}">
+          			<f:ajax execute="@form" render="ChooseForm" />
+          		</h:commandButton>
+          		<h:commandButton value="Ticket for logged user" action="#{seatSearchBean.changeOtherPerson}" styleClass="btn btn-primary"
+				rendered="#{seatSearchBean.differnetPerson}">
+          			<f:ajax execute="@form" render="ChooseForm" />
+          		</h:commandButton>			
+          		
+          		<div class="form-group">
+					<h:outputText value="Person Honorific: " styleClass="control-label" rendered="#{seatSearchBean.differnetPerson}" />
+		
+					<h:selectOneMenu id="honorificF" value="#{seatSearchBean.otherPersonHonorific}" styleClass="form-control" rendered="#{seatSearchBean.differnetPerson}" >
+					   	<f:selectItem itemValue="0" itemLabel="Mr" />
+					   	<f:selectItem itemValue="1" itemLabel="Ms" />
+					   	<f:selectItem itemValue="2" itemLabel="Mrs" />
+					   	<f:selectItem itemValue="3" itemLabel="Mx" />
+					</h:selectOneMenu>
+				</div>
+          		
+          		<div class="form-group">
+					<h:outputText value="Person name *: " styleClass="control-label" rendered="#{seatSearchBean.differnetPerson}" />
+		
+					<h:inputText id="otherPersonName" value="#{seatSearchBean.otherPersonName}" styleClass="form-control" autocomplete="false" 
+						required="#{seatSearchBean.differnetPerson}" requiredMessage="Person name field must not be empty" 
+						validatorMessage="Person name must be less than 256 characters" rendered="#{seatSearchBean.differnetPerson}">
+							<f:validateLength maximum="255"/>
+					</h:inputText>
+					<h:message for="otherPersonName" style="color:red" rendered="#{seatSearchBean.differnetPerson}" />
+				</div>	
+				
+				<div class="form-group">
+					<h:outputText value="Person phone *: " styleClass="control-label" rendered="#{seatSearchBean.differnetPerson}" />
+		
+					<h:inputText id="otherPersonPhone" value="#{seatSearchBean.otherPersonPhone}" styleClass="form-control" autocomplete="false" 
+						required="#{seatSearchBean.differnetPerson}" requiredMessage="Person phone field must not be empty" 
+						validatorMessage="Person phone must be less than 256 characters" rendered="#{seatSearchBean.differnetPerson}" >
+							<f:validateLength maximum="255"/>
+					</h:inputText>
+					<h:message for="otherPersonPhone" style="color:red" rendered="#{seatSearchBean.differnetPerson}" />
+				</div>
+						
+				
+				<h:commandButton id="nextButton" value="Reserve ticket" action="#{basketController.reserveTicket}" styleClass="btn btn-primary" />
+			</h:form>
+		</div>
+</ui:define>
+</ui:composition>

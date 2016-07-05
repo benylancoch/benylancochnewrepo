@@ -1,6 +1,5 @@
 package com.airprz.service;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +9,9 @@ public interface TransactionService {
 	
 	Transaction getTransaction(Long transactionId);
 	
-	List<Transaction> getTransactions(Timestamp start, Timestamp end, Boolean paid);
+	List<Transaction> getTransactions(Date start, Date end, Boolean paid);
 	
-	List<Transaction> getUserTransactions(Timestamp start, Timestamp end, Long userId);
+	List<Transaction> getUserTransactions(Date start, Date end, Long userId);
 	
 	Transaction addTransaction(Date date, String paidUsing, Long userId, Long codeId);
 	

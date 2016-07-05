@@ -10,11 +10,57 @@
                 	<div class="btn-group">
                 		<h:commandButton value="Change account data" action="chdata?faces-redirect=true" styleClass="btn btn-primary" />
                 		<h:commandButton value="Change password" action="chpassword?faces-redirect=true" styleClass="btn btn-primary" />
-                		<h:commandButton value="View transactions history" action="#" styleClass="btn btn-primary" />
                 	</div>
 				<div class="form-group">
-					<h1>Here will be short history of all bought tickets</h1>
+					<h1>Transactions</h1>
 				</div>
+				
+				<div class="form-inline">
+					<h:outputText value="Date : " styleClass="control-label" />
+		
+					<h:inputText id="validFrom" label="Validation error" value="#{userTransactionSearchBean.startDate}" styleClass="form-control" autocomplete="false" >
+						<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
+					</h:inputText>
+					
+					#{" - "}
+					<h:inputText id="validTo" label="Validation error" value="#{userTransactionSearchBean.endDate}" styleClass="form-control" autocomplete="false" >
+						<f:convertDateTime pattern="yyyy-MM-dd" type="date" />
+					</h:inputText>
+					
+					<div class="btn-group">
+                		<h:commandButton value="Go" action="profile" styleClass="btn btn-primary" />
+                	</div>
+               	</div>
+               	<h:message for="validFrom" style="color:red" /><br/>
+               	<h:message for="validTo" style="color:red" />
+				
+				<div class="table-responsive">
+						<h:dataTable value="#{transactionBean.listUserTransactions(userTransactionSearchBean.startDate, userTransactionSearchBean.endDate, userBean.userId)}"
+							 var="item" styleClass="table table-striped">
+							 <h:column>
+							 	<f:facet name="header">Transaction no</f:facet>
+							 	#{item.transactionId}
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header">Date</f:facet>
+							 	#{item.date}
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header">Paid using</f:facet>
+							 	#{"Bank transfer"}
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header">Paid date</f:facet>
+							 	#{item.paidDate}
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header"></f:facet>
+							 	<div class="btn-group">
+			                		<h:commandButton value="Ticekts" action="#{loginController.redirectTicketList(item)}" styleClass="btn btn-primary" />
+			                	</div>
+							 </h:column>
+						</h:dataTable>
+					</div>
 			</h:form>
 		</div>
     </ui:define>

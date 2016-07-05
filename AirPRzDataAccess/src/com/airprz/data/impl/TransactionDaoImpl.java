@@ -15,6 +15,8 @@ import com.airprz.model.PromoCode;
 import com.airprz.model.Tax;
 import com.airprz.model.Transaction;
 import com.airprz.model.User;
+import com.airprz.service.UserService;
+import com.airprz.service.impl.UserServiceImpl;
 
 public class TransactionDaoImpl implements TransactionDao {
 	
@@ -123,9 +125,9 @@ public class TransactionDaoImpl implements TransactionDao {
 						+ "FROM BAZA.TRANSACTIONS T "
 						+ "INNER JOIN BAZA.TAXES TX "
 						+ "ON T.TAX_ID = TX.TAX_ID "
-						+ "INNER JOIN BAZA.USERS U "
+						+ "LEFT JOIN BAZA.USERS U "
 						+ "ON T.USER_ID = U.USER_ID "
-						+ "INNER JOIN BAZA.PROMO_CODES PC "
+						+ "LEFT JOIN BAZA.PROMO_CODES PC "
 						+ "ON T.CODE_ID = PC.CODE_ID "
 						+ "WHERE T.DATE BETWEEN ? AND ? "
 						+ "ORDER BY T.DATE DESC");
@@ -197,11 +199,11 @@ public class TransactionDaoImpl implements TransactionDao {
 					+ "FROM BAZA.TRANSACTIONS T "
 					+ "INNER JOIN BAZA.TAXES TX "
 					+ "ON T.TAX_ID = TX.TAX_ID "
-					+ "INNER JOIN BAZA.USERS U "
+					+ "LEFT JOIN BAZA.USERS U "
 					+ "ON T.USER_ID = U.USER_ID "
-					+ "INNER JOIN BAZA.PROMO_CODES PC "
+					+ "LEFT JOIN BAZA.PROMO_CODES PC "
 					+ "ON T.CODE_ID = PC.CODE_ID "
-					+ "WHERE T.DATE BETWEEN ? AND ? AND T.USER_ID = ? "
+					+ "WHERE (T.DATE BETWEEN ? AND ?) AND T.USER_ID = ? "
 					+ "ORDER BY T.DATE DESC");
 			
 			stmt.setTimestamp(1, start);
@@ -246,7 +248,7 @@ public class TransactionDaoImpl implements TransactionDao {
 			JdbcCloses.closeIgnoreError(stmt);
 			JdbcCloses.closeIgnoreError(connection);
 		}
-		
+
 		return transactions;
 	}
 	
@@ -349,7 +351,9 @@ public class TransactionDaoImpl implements TransactionDao {
 				
 				
 				if (rs.next()) {
+					UserService userService = new UserServiceImpl();
 					transaction.setTransactionId(rs.getLong("last_cod"));
+					transaction.setUser(userService.getUser(transaction.getUser().getId()));
 				}
 				
 				stmt.close();

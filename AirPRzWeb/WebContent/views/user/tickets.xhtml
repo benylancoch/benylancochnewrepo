@@ -1,0 +1,46 @@
+<ui:composition template="/templates/default/main.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:h="http://java.sun.com/jsf/html"  
+                xmlns:f="http://java.sun.com/jsf/core"  
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:define name="content">  
+		<div class="container col-md-6">
+			<h1>Profile</h1>
+                <h:form>
+				<div class="form-group">
+					<h1>Tickets for transaction #{transactionBean.transactionId}</h1>
+				</div>
+				
+				<div class="table-responsive">
+						<h:dataTable value="#{loginController.getListTickets(transactionBean.transactionId)}"
+							 var="item" styleClass="table table-striped">
+							 <h:column>
+							 	<f:facet name="header">Ticket no</f:facet>
+							 	#{item.ticketId}
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header">Flight no</f:facet>
+							 	#{item.flight.flightNo}
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header">Ticket seat no</f:facet>
+							 	#{item.flightSeat.seatNo}
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header">Ticket for</f:facet>
+							 	<h:outputText value="#{item.user.firstname} #{item.user.lastname}" rendered="#{item.otherUserName == null}"/>
+							 	
+							 	<h:outputText value="#{item.otherUserName}" rendered="#{item.otherUserName != null}"/>
+							 </h:column>
+							 <h:column>
+							 	<f:facet name="header"></f:facet>
+							 	<div class="btn-group">
+			                		<h:commandButton value="Generate PDF" action="#{loginController.redirectTicketList(item)}" styleClass="btn btn-primary" />
+			                	</div>
+							 </h:column>
+						</h:dataTable>
+					</div>
+			</h:form>
+		</div>
+    </ui:define>
+</ui:composition>

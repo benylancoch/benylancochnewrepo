@@ -101,7 +101,7 @@ public class FlightSeatServiceImpl implements FlightSeatService {
 	public FlightSeat bookSeat(Long seatNo, Long flightId) {
 		FlightSeat flightSeat = null;
 		
-		if (seatNo != null && flightId != null && !"".equals(seatNo)) {
+		if (seatNo != null && flightId != null) {
 			flightSeat = flightSeatDao.bookSeat(seatNo, flightId);
 		}
 		
